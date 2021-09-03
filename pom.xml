@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>io.vzhidu</groupId>
+    <artifactId>chassis-parent</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <name>chassis-parent</name>
+    <description/>
+    <packaging>pom</packaging>
+
+    <developers>
+        <developer>
+            <id>0001</id>
+            <name>v-zhidu</name>
+            <email>du527300747@gmail.com</email>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>https://github.com/v-zhidu/chassis.git</connection>
+        <developerConnection>git@github.com:v-zhidu/chassis.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
+
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/v-zhidu/chassis/issues</url>
+    </issueManagement>
+
+    <modules>
+        <module>chassis-build-tools</module>
+        <module>chassis-pom/chassis-java-pom</module>
+        <module>chassis-pom/chassis-spring-pom</module>
+        <module>chassis-common/chassis-common-core</module>
+        <!--        <module>chassis-common/chassis-common-spring-cloud-app</module>-->
+        <!--        <module>chassis-common/chassis-common-spring-data-jdbc</module>-->
+        <!--        <module>chassis-common/chassis-common-spring-feign-client</module>-->
+        <!--        <module>chassis-dist</module>-->
+        <!--        <module>chassis-infra/chassis-infra-eureka</module>-->
+        <!--        <module>chassis-infra/chassis-infra-gateway</module>-->
+        <!--        <module>chassis-middleware/chassis-middleware-api-client</module>-->
+        <!--        <module>chassis-middleware/chassis-middleware-core</module>-->
+        <!--        <module>chassis-middleware/chassis-middleware-id-generator</module>-->
+        <!--        <module>chassis-middleware/chassis-middleware-sample</module>-->
+    </modules>
+
+    <!--  TODO: deployment repository settings -->
+    <properties>
+        <maven.enforcer.fail>false</maven.enforcer.fail>
+        <maven.install.skip>true</maven.install.skip>
+        <maven.deploy.skip>true</maven.deploy.skip>
+        <spring-boot.build-image.publish>true</spring-boot.build-image.publish>
+
+        <io.vzhidu.build-tools.version>${project.version}</io.vzhidu.build-tools.version>
+        <maven.checkstyle.file>maven/checkstyle.xml</maven.checkstyle.file>
+        <!--  Put you suppressions file in .mvn folder for your own project-->
+        <maven.checkstyle.suppressions.file>.mvn/suppressions.xml</maven.checkstyle.suppressions.file>
+        <artifacts.repository/>
+        <docker.image.prefix/>
+        <docker.registry/>
+        <docker.registry.url/>
+        <docker.registry.username/>
+        <docker.registry.password/>
+    </properties>
+
+</project>

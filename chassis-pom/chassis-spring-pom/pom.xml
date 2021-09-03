@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>io.vzhidu</groupId>
+        <artifactId>chassis-java-pom</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
+        <relativePath>../chassis-java-pom/pom.xml</relativePath>
+    </parent>
+
+    <artifactId>chassis-spring-pom</artifactId>
+    <name>chassis-spring-pom</name>
+    <description/>
+    <packaging>pom</packaging>
+
+    <properties>
+        <spring-boot.version>2.4.3</spring-boot.version>
+        <spring-data-bom.version>2021.0.1</spring-data-bom.version>
+        <spring-cloud.version>2020.0.2</spring-cloud.version>
+        <spring-boot-maven-plugin.version>2.4.5</spring-boot-maven-plugin.version>
+        <jib-maven-plugin.version>2.8.0</jib-maven-plugin.version>
+        <frontend-maven-plugin.version>1.9.0</frontend-maven-plugin.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+        </dependency>
+
+        <!-- dev tools -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-configuration-processor -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.junit.vintage</groupId>
+                    <artifactId>junit-vintage-engine</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+    </dependencies>
+
+    <!-- this section defines the module versions that are used if nothing else is specified. -->
+    <dependencyManagement>
+        <dependencies>
+            <!-- Spring dependencies-->
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-bom</artifactId>
+                <version>${spring-data-bom.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring-boot-maven-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>package</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>deploy</id>
+                            <phase>deploy</phase>
+                            <goals>
+                                <goal>build-image</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <excludeDevtools>true</excludeDevtools>
+                        <excludes>
+                            <exclude>
+                                <groupId>org.springframework.boot</groupId>
+                                <artifactId>spring-boot-configuration-processor</artifactId>
+                            </exclude>
+                        </excludes>
+                        <layers>
+                            <enabled>true</enabled>
+                        </layers>
+                        <image>
+                            <name>${docker.registry}/${docker.image.prefix}/${project.artifactId}:${project.version}
+                            </name>
+                            <env>
+                                <BP_IMAGE_LABELS/>
+                            </env>
+                        </image>
+                        <docker>
+                            <publishRegistry>
+                                <url>${docker.registry.url}</url>
+                                <username>${docker.registry.username}</username>
+                                <password>${docker.registry.password}</password>
+                            </publishRegistry>
+                        </docker>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>com.githdockub.eirslett</groupId>
+                    <artifactId>frontend-maven-plugin</artifactId>
+                    <version>${frontend-maven-plugin.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>spring-snapshots</id>
+            <url>https://repo.spring.io/snapshot</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>spring-milestones</id>
+            <url>https://repo.spring.io/milestone</url>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <!-- Project profiles definition -->
+    <profiles>
+        <profile>
+            <id>spring-boot</id>
+            <activation>
+                <file>
+                    <exists>${basedir}/src/main/resources/application.yml</exists>
+                </file>
+            </activation>
+            <build>
+                <resources>
+                    <!-- exclude application-*.yml from JAR file. -->
+                    <resource>
+                        <directory>${basedir}/src/main/resources</directory>
+                        <excludes>
+                            <exclude>**/application*.yml</exclude>
+                            <exclude>**/application*.yaml</exclude>
+                            <exclude>**/application*.properties</exclude>
+                            <exclude>**/*.xml</exclude>
+                        </excludes>
+                    </resource>
+                </resources>
+                <plugins>
+                    <plugin>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-maven-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>frontend</id>
+            <activation>
+                <file>
+                    <exists>${basedir}/src/frontend/package.json</exists>
+                </file>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.github.eirslett</groupId>
+                        <artifactId>frontend-maven-plugin</artifactId>
+                        <configuration>
+                            <installDirectory>/tmp</installDirectory>
+                            <workingDirectory>${basedir}/src/frontend</workingDirectory>
+                        </configuration>
+                        <executions>
+                            <!-- Install our node and npm version to run npm/node scripts-->
+                            <execution>
+                                <id>install node and npm</id>
+                                <goals>
+                                    <goal>install-node-and-npm</goal>
+                                </goals>
+                                <configuration>
+                                    <nodeVersion>v14.9.0</nodeVersion>
+                                </configuration>
+                            </execution>
+                            <!-- Install all project dependencies -->
+                            <execution>
+                                <id>npm install</id>
+                                <goals>
+                                    <goal>npm</goal>
+                                </goals>
+                                <!-- optional: default phase is "generate-resources" -->
+                                <phase>generate-resources</phase>
+                                <!-- Optional configuration which provides for running any npm command -->
+                                <configuration>
+                                    <arguments>install</arguments>
+                                </configuration>
+                            </execution>
+                            <!-- Build and minify static files -->
+                            <execution>
+                                <id>npm run build</id>
+                                <goals>
+                                    <goal>npm</goal>
+                                </goals>
+                                <configuration>
+                                    <arguments>run build</arguments>
+                                </configuration>
+                            </execution>
+                            <!--  Clean dist -->
+                            <execution>
+                                <id>npm run clean</id>
+                                <goals>
+                                    <goal>npm</goal>
+                                </goals>
+                                <phase>clean</phase>
+                                <configuration>
+                                    <arguments>run clean</arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <version>3.2.0</version>
+                        <executions>
+                            <execution>
+                                <id>copy Vue.js frontend content</id>
+                                <phase>generate-resources</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${basedir}/src/main/resources/public/</outputDirectory>
+                                    <overwrite>true</overwrite>
+                                    <resources>
+                                        <resource>
+                                            <directory>${basedir}/src/frontend/dist</directory>
+                                            <includes>
+                                                <include>img/</include>
+                                                <include>css/</include>
+                                                <include>js/</include>
+                                                <include>index.html</include>
+                                                <include>favicon.ico</include>
+                                            </includes>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <!-- 本地或远程仓库不存在依赖时执行clean会报错-->
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>1.5.0</version>
+                        <executions>
+                            <execution>
+                                <id>remove-frontend-resources</id>
+                                <phase>clean</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>rm</executable>
+                                    <arguments>
+                                        <argument>-rf</argument>
+                                        <argument>${basedir}/src/main/resources/public/</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>
