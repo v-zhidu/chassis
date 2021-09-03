@@ -26,5 +26,9 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
       
-    - name: Official SonarQube Scan
-      uses: SonarSource/sonarqube-scan-action@v1.0.0
+    - name: SonarCloud Scan
+      uses: SonarSource/sonarcloud-github-action@v1.6
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
