@@ -427,39 +427,5 @@
                 </plugins>
             </build>
         </profile>
-        <profile>
-            <id>sonarqube</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-                <property>
-                    <name>sonarqube</name>
-                </property>
-            </activation>
-            <properties>
-                <!-- Optional URL to server. Default value is http://localhost:9000 -->
-                <sonar.scm.provider>git</sonar.scm.provider>
-                <sonar.coverage.jacoco.xmlReportPaths>
-                    ${project.build.directory}/jacoco-report/jacoco.xml
-                </sonar.coverage.jacoco.xmlReportPaths>
-            </properties>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.sonarsource.scanner.maven</groupId>
-                        <artifactId>sonar-maven-plugin</artifactId>
-                        <version>3.7.0.1746</version>
-                        <executions>
-                            <execution>
-                                <id>verify-sonarqube</id>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>sonar</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
     </profiles>
 </project>
