@@ -30,6 +30,14 @@
         <url>https://github.com/v-zhidu/chassis/issues</url>
     </issueManagement>
 
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub v-zhidu Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/v-zhidu/chassis</url>
+        </repository>
+    </distributionManagement>
+
     <modules>
         <module>chassis-build-tools</module>
         <module>chassis-pom/chassis-java-pom</module>
@@ -47,11 +55,10 @@
         <!--        <module>chassis-middleware/chassis-middleware-sample</module>-->
     </modules>
 
-    <!--  TODO: deployment repository settings -->
     <properties>
         <maven.enforcer.fail>false</maven.enforcer.fail>
         <maven.install.skip>true</maven.install.skip>
-        <maven.deploy.skip>true</maven.deploy.skip>
+        <maven.deploy.skip>false</maven.deploy.skip>
         <spring-boot.build-image.publish>true</spring-boot.build-image.publish>
 
         <io.vzhidu.build-tools.version>${project.version}</io.vzhidu.build-tools.version>
