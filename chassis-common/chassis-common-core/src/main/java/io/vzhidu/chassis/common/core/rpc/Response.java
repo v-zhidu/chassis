@@ -14,9 +14,9 @@ import lombok.ToString;
 public final class Response<T> extends AbstractRpcResponse {
 
     /**
-     * Construct a error response based on {@link RpcStatus}
+     * Construct an error response based on {@link RpcStatus}
      */
-    public static Response<?> fail(RpcStatus status) {
+    public static Response<Void> fail(RpcStatus status) {
         return new Response<>(status);
     }
 

@@ -34,9 +34,9 @@ public abstract class AbstractEntity<T extends Serializable> implements Identifi
     private LocalDateTime updateAt;
 
     /**
-     * Whether this entity has been delete
+     * Whether this entity has been deleted
      */
-    private transient Boolean deleted;
+    private Boolean deleted;
 
     /**
      * Default constructor, only invoke by his subclass

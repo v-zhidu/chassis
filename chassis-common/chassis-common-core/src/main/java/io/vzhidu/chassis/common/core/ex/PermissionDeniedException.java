@@ -21,7 +21,7 @@ public class PermissionDeniedException extends RuntimeException {
      * for better performance
      */
     @Override
-    public Throwable fillInStackTrace() {
+    public synchronized Throwable fillInStackTrace() {
         return this;
     }
 }

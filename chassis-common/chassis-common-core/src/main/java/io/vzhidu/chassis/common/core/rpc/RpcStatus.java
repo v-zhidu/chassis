@@ -438,17 +438,6 @@ public final class RpcStatus {
         this.error = error;
     }
 
-//    /**
-//     * Add error message into status.
-//     */
-//    public RpcStatus withMessage(String message) {
-//        if (Objects.equals(this.message, message)) {
-//            return this;
-//        }
-//
-//        return new RpcStatus(this.code, this.name, message, this.error);
-//    }
-
     /**
      * Add error details int status.
      */
