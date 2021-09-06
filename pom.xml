@@ -57,7 +57,7 @@
 
     <properties>
         <maven.enforcer.fail>false</maven.enforcer.fail>
-        <maven.install.skip>true</maven.install.skip>
+        <maven.install.skip>false</maven.install.skip>
         <maven.deploy.skip>false</maven.deploy.skip>
         <spring-boot.build-image.publish>true</spring-boot.build-image.publish>
 
