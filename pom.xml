@@ -61,10 +61,10 @@
         <maven.deploy.skip>false</maven.deploy.skip>
         <spring-boot.build-image.publish>true</spring-boot.build-image.publish>
 
-        <io.vzhidu.build-tools.version>${project.version}</io.vzhidu.build-tools.version>
+        <io.vzhidu.build-tools.version>0.1.0-SNAPSHOT</io.vzhidu.build-tools.version>
         <maven.checkstyle.file>maven/checkstyle.xml</maven.checkstyle.file>
         <!--  Put you suppressions file in .mvn folder for your own project-->
-        <maven.checkstyle.suppressions.file>.mvn/suppressions.xml</maven.checkstyle.suppressions.file>
+        <maven.checkstyle.suppressions.file>maven/suppressions.xml</maven.checkstyle.suppressions.file>
         <artifacts.repository/>
         <docker.image.prefix/>
         <docker.registry/>

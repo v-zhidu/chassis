@@ -33,6 +33,13 @@
     </properties>
 
     <dependencies>
+        <!-- 显式声明依赖，避免引入时无法找到从远程安装jar包的错误 -->
+        <dependency>
+            <groupId>io.vzhidu</groupId>
+            <artifactId>chassis-build-tools</artifactId>
+            <version>0.1.0-SNAPSHOT</version>
+        </dependency>
+
         <!-- Root dependencies for all projects -->
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -112,6 +119,7 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
     <build>
         <plugins>
             <!-- Phrase 1: Development -->
@@ -419,4 +427,13 @@
             </plugins>
         </pluginManagement>
     </build>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </reporting>
 </project>
