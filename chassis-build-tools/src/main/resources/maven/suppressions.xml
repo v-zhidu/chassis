@@ -23,9 +23,9 @@ under the License.
 		"http://www.puppycrawl.com/dtds/suppressions_1_1.dtd">
 
 <suppressions>
-<!--	<suppress files="CurrencyCode.java" checks="MagicNumberCheck"/>-->
-<!--	<suppress files="CurrencyCode.java" checks="FileLength"/>-->
-<!--	<suppress files="CountryCode.java" checks="MagicNumberCheck"/>-->
-<!--	<suppress files="CountryCode.java" checks="FileLength"/>-->
-<!--	<suppress files="IdMonitorServiceImpl.java" checks="MagicNumberCheck"/>-->
+	<suppress files="CurrencyCode.java" checks="MagicNumberCheck"/>
+	<suppress files="CurrencyCode.java" checks="FileLength"/>
+	<suppress files="CountryCode.java" checks="MagicNumberCheck"/>
+	<suppress files="CountryCode.java" checks="FileLength"/>
+	<suppress files="IdMonitorServiceImpl.java" checks="MagicNumberCheck"/>
 </suppressions>
