@@ -12,9 +12,6 @@
 
 ### Features
 
-* Built on Spring Cloud architecture，support both standalone mode and cluster with service discovery.
-* Built-in file storage service (filesystem, OSS)
-
 ## Building Chassis from source
 
 Prerequisites for building code:
@@ -42,7 +39,6 @@ Now Chassis installed in `build-target`
 We recommend to use IntelliJ for developing the sourcecode.
 
 * IntelliJ download: [https://www.jetbrains.com/idea/](https://www.jetbrains.com/idea/)
-
 
 ## Documentation
 

@@ -20,8 +20,9 @@
     </developers>
 
     <scm>
-        <connection>https://github.com/v-zhidu/chassis.git</connection>
-        <developerConnection>git@github.com:v-zhidu/chassis.git</developerConnection>
+        <connection>scm:git:https://github.com/v-zhidu/chassis.git</connection>
+        <developerConnection>scm:git:ssh:git@github.com:v-zhidu/chassis.git</developerConnection>
+        <url>scm:git:https://github.com/v-zhidu/chassis</url>
         <tag>HEAD</tag>
     </scm>
 
@@ -56,15 +57,8 @@
     </modules>
 
     <properties>
-        <maven.enforcer.fail>false</maven.enforcer.fail>
-        <maven.install.skip>false</maven.install.skip>
-        <maven.deploy.skip>false</maven.deploy.skip>
         <spring-boot.build-image.publish>true</spring-boot.build-image.publish>
 
-        <io.vzhidu.build-tools.version>0.1.0-SNAPSHOT</io.vzhidu.build-tools.version>
-        <maven.checkstyle.file>maven/checkstyle.xml</maven.checkstyle.file>
-        <!--  Put you suppressions file in .mvn folder for your own project-->
-        <maven.checkstyle.suppressions.file>maven/suppressions.xml</maven.checkstyle.suppressions.file>
         <artifacts.repository/>
         <docker.image.prefix/>
         <docker.registry/>

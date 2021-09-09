@@ -16,23 +16,42 @@
     <packaging>pom</packaging>
 
     <properties>
-        <!-- Maven Properties-->
+        <!-- Maven Properties -->
+        <!-- Override the properties to change the maven behavior -->
+        <encoding>UTF-8</encoding>
+        <project.build.sourceEncoding>${encoding}</project.build.sourceEncoding>
         <java.version>11</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <!-- Dependencies Versions -->
+        <maven.enforcer.fail>true</maven.enforcer.fail>
+        <maven.checkstyle.file>maven/checkstyle.xml</maven.checkstyle.file>
+        <maven.checkstyle.suppressions.file>maven/suppressions.xml</maven.checkstyle.suppressions.file>
+        <maven.checkstyle.failOnViolation>true</maven.checkstyle.failOnViolation>
+        <maven.deploy.skip>false</maven.deploy.skip>
+        <!-- Fill the mainClass value if it is an executable jar -->
+        <main.class/>
+
+        <!-- Root dependencies versions for all projects -->
+        <io.vzhidu.build-tools.version>0.1.0-SNAPSHOT</io.vzhidu.build-tools.version>
+        <google-findbugs.version>3.0.2</google-findbugs.version>
         <lombok.version>1.18.10</lombok.version>
         <org-mapstruct.version>1.4.2.Final</org-mapstruct.version>
         <jakarta-validation-api.version>2.0.2</jakarta-validation-api.version>
-        <google-findbugs.version>3.0.2</google-findbugs.version>
-        <jackson.version>2.11.4</jackson.version>
         <slf4j-api.version>1.7.30</slf4j-api.version>
         <logback.version>1.2.3</logback.version>
+        <jackson.version>2.11.4</jackson.version>
         <junit-jupiter.version>5.7.1</junit-jupiter.version>
+        <spock.version>2.0-groovy-3.0</spock.version>
     </properties>
 
     <dependencies>
+        <!--  Code Style Checking-->
+        <dependency>
+            <groupId>com.google.code.findbugs</groupId>
+            <artifactId>jsr305</artifactId>
+            <version>${google-findbugs.version}</version>
+        </dependency>
+
         <!-- 显式声明依赖，避免引入时无法找到从远程安装jar包的错误 -->
         <dependency>
             <groupId>io.vzhidu</groupId>
@@ -40,12 +59,11 @@
             <version>0.1.0-SNAPSHOT</version>
         </dependency>
 
-        <!-- Root dependencies for all projects -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <scope>provided</scope>
             <version>${lombok.version}</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
@@ -58,13 +76,6 @@
             <groupId>jakarta.validation</groupId>
             <artifactId>jakarta.validation-api</artifactId>
             <version>${jakarta-validation-api.version}</version>
-        </dependency>
-
-        <!--  Code Style Checking-->
-        <dependency>
-            <groupId>com.google.code.findbugs</groupId>
-            <artifactId>jsr305</artifactId>
-            <version>${google-findbugs.version}</version>
         </dependency>
 
         <!-- Logging API -->
@@ -100,10 +111,21 @@
             <version>${jackson.version}</version>
         </dependency>
 
-        <!--  Testing Junit5 -->
+        <!--  Testing -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.spockframework</groupId>
+            <artifactId>spock-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.spockframework</groupId>
+            <artifactId>spock-junit4</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -114,6 +136,13 @@
                 <groupId>org.junit</groupId>
                 <artifactId>junit-bom</artifactId>
                 <version>${junit-jupiter.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.spockframework</groupId>
+                <artifactId>spock-bom</artifactId>
+                <version>${spock.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -150,7 +179,17 @@
                 <artifactId>maven-enforcer-plugin</artifactId>
             </plugin>
 
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+            </plugin>
+
             <!-- Phrase 4: Testing -->
+            <plugin>
+                <groupId>org.codehaus.gmavenplus</groupId>
+                <artifactId>gmavenplus-plugin</artifactId>
+            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -172,12 +211,19 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+            </plugin>
         </plugins>
 
         <pluginManagement>
             <plugins>
                 <!-- SCM -->
                 <!-- @formatter:off -->
+                <!--  Add git information into git.properties -->
+                <!--  https://github.com/git-commit-id/git-commit-id-maven-plugin/blob/master/docs/using-the-plugin.md-->
                 <plugin>
                     <groupId>pl.project13.maven</groupId>
                     <artifactId>git-commit-id-plugin</artifactId>
@@ -190,45 +236,11 @@
                             </goals>
                             <phase>initialize</phase>
                         </execution>
-                        <execution>
-                            <id>validate-the-git-infos</id>
-                            <goals>
-                                <goal>validateRevision</goal>
-                            </goals>
-                            <phase>package</phase>
-                        </execution>
                     </executions>
                     <configuration>
                         <generateGitPropertiesFile>true</generateGitPropertiesFile>
-                        <dateFormat>yyyy-MM-dd'T'HH:mm:ssZ</dateFormat>
-                        <dotGitDirectory>${project.basedir}/.git</dotGitDirectory>
-                        <commitIdGenerationMode>flat</commitIdGenerationMode>
-                        <generateGitPropertiesFilename>src/main/resources/git.properties</generateGitPropertiesFilename>
                         <injectAllReactorProjects>true</injectAllReactorProjects>
-                        <failOnNoGitDirectory>false</failOnNoGitDirectory>
-                        <prefix>git</prefix>
-                        <skipPoms>true</skipPoms>
                         <verbose>true</verbose>
-
-                        <!--
-                             Very important to make sure that the format is set to "properties"
-                             (which is the default value if format tag is omitted)
-                             instead of "JSON" in order to work with spring actuator
-                        -->
-                        <format>properties</format>
-                        <gitDescribe>
-                            <skip>false</skip>
-                            <always>false</always>
-                            <dirty>-dirty</dirty>
-                        </gitDescribe>
-                        <validationProperties>
-                            <!-- verify that the current repository is not dirty -->
-                            <validationProperty>
-                                <name>validating git dirty</name>
-                                <value>false</value>
-                                <shouldMatchTo>false</shouldMatchTo>
-                            </validationProperty>
-                        </validationProperties>
                     </configuration>
                 </plugin>
                 <!-- @formatter:on -->
@@ -238,19 +250,19 @@
                 <plugin>
                     <groupId>com.amashchenko.maven.plugin</groupId>
                     <artifactId>gitflow-maven-plugin</artifactId>
-                    <version>1.14.0</version>
+                    <version>1.16.0</version>
                     <configuration>
                         <!-- put your configurations here -->
                         <installProject>false</installProject>
                         <verbose>false</verbose>
                         <keepBranch>false</keepBranch>
-                        <skipTestProject>true</skipTestProject>
+                        <skipTestProject>false</skipTestProject>
                         <featureSquash>true</featureSquash>
                         <pushRemote>true</pushRemote>
 
                         <gitFlowConfig>
-                            <productionBranch>master</productionBranch>
-                            <developmentBranch>master</developmentBranch>
+                            <productionBranch>main</productionBranch>
+                            <developmentBranch>main</developmentBranch>
                             <featureBranchPrefix>feature/</featureBranchPrefix>
                             <releaseBranchPrefix>release/</releaseBranchPrefix>
                             <hotfixBranchPrefix>hotfix/</hotfixBranchPrefix>
@@ -292,7 +304,7 @@
                         <suppressionsLocation>${maven.checkstyle.suppressions.file}</suppressionsLocation>
                         <includeTestSourceDirectory>false</includeTestSourceDirectory>
                         <logViolationsToConsole>true</logViolationsToConsole>
-                        <failOnViolation>true</failOnViolation>
+                        <failOnViolation>${maven.checkstyle.failOnViolation}</failOnViolation>
                     </configuration>
                 </plugin>
 
@@ -320,20 +332,61 @@
                     </configuration>
                 </plugin>
 
+                <!-- Packaging -->
+                <!-- @formatter:off -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-jar-plugin</artifactId>
-                    <configuration>
-                        <archive>
-                            <manifest>
-                                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-                            </manifest>
-                        </archive>
-                    </configuration>
+                    <artifactId>maven-shade-plugin</artifactId>
+                    <version>3.2.4</version>
+                    <executions>
+                        <execution>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>shade</goal>
+                            </goals>
+                            <configuration>
+                                <createDependencyReducedPom>false</createDependencyReducedPom>
+                                <filters>
+                                    <filter>
+                                        <artifact>*:*</artifact>
+                                        <excludes>
+                                            <exclude>module-info.class</exclude>
+                                            <exclude>META-INF/*.MF</exclude>
+                                            <exclude>META-INF/*.SF</exclude>
+                                            <exclude>META-INF/*.DSA</exclude>
+                                            <exclude>META-INF/*.RSA</exclude>
+                                        </excludes>
+                                    </filter>
+                                </filters>
+                                <artifactSet>
+                                    <excludes>
+                                        <exclude>junit:junit</exclude>
+                                        <exclude>org.junit.jupiter:*</exclude>
+                                        <exclude>org.junit.platform:*</exclude>
+                                        <exclude>org.apiguardian:*</exclude>
+                                        <exclude>org.opentest4j:*</exclude>
+                                        <exclude>jmock:*</exclude>
+                                        <exclude>org.apache.maven:lib:tests</exclude>
+                                        <exclude>log4j:log4j:jar:</exclude>
+                                        <exclude>io.vzhidu:chassis-build-tools:</exclude>
+                                    </excludes>
+                                </artifactSet>
+                                <transformers>
+                                    <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                        <mainClass>${main.class}</mainClass>
+                                    </transformer>
+                                    <transformer implementation="org.apache.maven.plugins.shade.resource.ApacheLicenseResourceTransformer">
+                                    </transformer>
+                                    <transformer implementation="org.apache.maven.plugins.shade.resource.ApacheNoticeResourceTransformer">
+                                        <addHeader>false</addHeader>
+                                    </transformer>
+                                </transformers>
+                            </configuration>
+                        </execution>
+                    </executions>
                 </plugin>
+                <!-- @formatter:on -->
 
-                <!-- Packaging -->
-                <!-- spring-boot-starter-parent 提供spring-boot-maven-plugin 和 maven-shade-plugin两种打包工作，可根据实际需要选择-->
                 <!--解决依赖冲突问题-->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -358,18 +411,35 @@
                 </plugin>
 
                 <!-- Testing -->
+                <!-- @formatter:off -->
+                <!-- This plugin is used to compile Groovy code for spock -->
+                <plugin>
+                    <groupId>org.codehaus.gmavenplus</groupId>
+                    <artifactId>gmavenplus-plugin</artifactId>
+                    <version>1.12.0</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>compileTests</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>3.0.0-M4</version>
-                    <dependencies>
-                        <dependency>
-                            <groupId>org.junit.jupiter</groupId>
-                            <artifactId>junit-jupiter-engine</artifactId>
-                            <version>${junit-jupiter.version}</version>
-                        </dependency>
-                    </dependencies>
+                    <version>3.0.0-M5</version>
+                    <configuration>
+                        <useModulePath>false</useModulePath>
+                        <useFile>false</useFile>
+                        <includes>
+                            <include>**/*Test</include>
+                            <include>**/*Spec</include>
+                        </includes>
+                    </configuration>
                 </plugin>
+                <!-- @formatter:on -->
 
                 <!-- Report -->
                 <!-- https://mvnrepository.com/artifact/org.jacoco/jacoco-maven-plugin -->
@@ -424,16 +494,29 @@
                     <version>3.7.1</version>
                 </plugin>
 
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-project-info-reports-plugin</artifactId>
+                    <version>3.0.0</version>
+                </plugin>
+
+                <!--  Remove unused files -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>3.1.0</version>
+                    <configuration>
+                        <filesets>
+                            <fileset>
+                                <directory>src/main/resources</directory>
+                                <includes>
+                                    <include>**/git.properties</include>
+                                </includes>
+                            </fileset>
+                        </filesets>
+                    </configuration>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
-
-    <reporting>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </reporting>
 </project>
