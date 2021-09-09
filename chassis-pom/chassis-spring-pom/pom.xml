@@ -20,7 +20,6 @@
         <spring-data-bom.version>2021.0.1</spring-data-bom.version>
         <spring-cloud.version>2020.0.2</spring-cloud.version>
         <spring-boot-maven-plugin.version>2.4.5</spring-boot-maven-plugin.version>
-        <jib-maven-plugin.version>2.8.0</jib-maven-plugin.version>
         <frontend-maven-plugin.version>1.9.0</frontend-maven-plugin.version>
     </properties>
 
@@ -105,13 +104,6 @@
                                 <goal>repackage</goal>
                             </goals>
                         </execution>
-                        <execution>
-                            <id>deploy</id>
-                            <phase>deploy</phase>
-                            <goals>
-                                <goal>build-image</goal>
-                            </goals>
-                        </execution>
                     </executions>
                     <configuration>
                         <excludeDevtools>true</excludeDevtools>
@@ -124,20 +116,6 @@
                         <layers>
                             <enabled>true</enabled>
                         </layers>
-                        <image>
-                            <name>${docker.registry}/${docker.image.prefix}/${project.artifactId}:${project.version}
-                            </name>
-                            <env>
-                                <BP_IMAGE_LABELS/>
-                            </env>
-                        </image>
-                        <docker>
-                            <publishRegistry>
-                                <url>${docker.registry.url}</url>
-                                <username>${docker.registry.username}</username>
-                                <password>${docker.registry.password}</password>
-                            </publishRegistry>
-                        </docker>
                     </configuration>
                 </plugin>
 
