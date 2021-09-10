@@ -32,7 +32,6 @@
         <main-class/>
 
         <!-- Root dependencies versions for all projects -->
-        <io.vzhidu.build-tools.version>0.1.0-SNAPSHOT</io.vzhidu.build-tools.version>
         <google-findbugs.version>3.0.2</google-findbugs.version>
         <lombok.version>1.18.10</lombok.version>
         <org-mapstruct.version>1.4.2.Final</org-mapstruct.version>
@@ -57,7 +56,6 @@
         <dependency>
             <groupId>io.vzhidu</groupId>
             <artifactId>chassis-build-tools</artifactId>
-            <version>0.1.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
@@ -114,15 +112,18 @@
 
         <!--  Testing -->
         <!--  避免其他包引入的groovy版本不兼容的问题-->
-        <dependency> <!-- use a specific Groovy version rather than the one specified by spock-core -->
+        <!-- use a specific Groovy version rather than the one specified by spock-core -->
+        <dependency>
             <groupId>org.codehaus.groovy</groupId>
             <artifactId>groovy</artifactId>
             <version>${groovy.version}</version>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -306,7 +307,7 @@
                         <dependency>
                             <groupId>io.vzhidu</groupId>
                             <artifactId>chassis-build-tools</artifactId>
-                            <version>${io.vzhidu.build-tools.version}</version>
+                            <version>${chassis.version}</version>
                         </dependency>
                     </dependencies>
                     <executions>
@@ -383,7 +384,7 @@
                                 <exclude>jmock:*</exclude>
                                 <exclude>org.apache.maven:lib:tests</exclude>
                                 <exclude>log4j:log4j:jar:</exclude>
-                                <exclude>io.vzhidu:chassis-build-tools:</exclude>
+<!--                                <exclude>io.vzhidu:chassis-build-tools:</exclude>-->
                             </excludes>
                         </artifactSet>
                     </configuration>

@@ -1,0 +1,12 @@
+${AnsiColor.BRIGHT_CYAN}
+ ,-----. ,--.                               ,--.
+'  .--./ |  ,---.   ,--,--.  ,---.   ,---.  `--'  ,---.
+|  |     |  .-.  | ' ,-.  | (  .-'  (  .-'  ,--. (  .-'
+'  '--'\ |  | |  | \ '-'  | .-'  `) .-'  `) |  | .-'  `)
+ `-----' `--' `--'  `--`--' `----'  `----'  `--' `----'
+
+${AnsiColor.BRIGHT_RED}
+:: Application Name :: ${application.title}${application.formatted-version}
+:: Spring Boot :: ${spring-boot.formatted-version}
+
+${AnsiColor.DEFAULT}

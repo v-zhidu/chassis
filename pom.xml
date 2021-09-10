@@ -43,7 +43,7 @@
         <module>chassis-pom/chassis-java-pom</module>
         <module>chassis-pom/chassis-spring-pom</module>
         <module>chassis-common/chassis-common-core</module>
-        <!--        <module>chassis-common/chassis-common-spring-cloud-app</module>-->
+        <module>chassis-common/chassis-common-spring-cloud-app</module>
         <!--        <module>chassis-common/chassis-common-spring-data-jdbc</module>-->
         <!--        <module>chassis-common/chassis-common-spring-feign-client</module>-->
         <!--        <module>chassis-dist</module>-->
@@ -55,4 +55,27 @@
         <!--        <module>chassis-middleware/chassis-middleware-sample</module>-->
     </modules>
 
+    <properties>
+        <chassis.version>0.1.0-SNAPSHOT</chassis.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.vzhidu</groupId>
+                <artifactId>chassis-build-tools</artifactId>
+                <version>${chassis.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.vzhidu</groupId>
+                <artifactId>chassis-common-core</artifactId>
+                <version>${chassis.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.vzhidu</groupId>
+                <artifactId>chassis-common-spring-cloud-app</artifactId>
+                <version>${chassis.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>
