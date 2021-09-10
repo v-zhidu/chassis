@@ -28,13 +28,13 @@ class ServletErrorControllerTest {
     TestRestTemplate restTemplate;
 
     @Test
-    public void testNoHandlerException() throws IOException {
+    void testNoHandlerException() throws IOException {
         ResponseEntity<String> res = restTemplate.getForEntity("/mock/not_exist_path", String.class);
         assertResponse(NO_HANDLER_EXCEPTION, HttpStatus.NOT_FOUND, res, objectMapper);
     }
 
     @Test
-    public void testException() throws IOException {
+    void testException() throws IOException {
         ResponseEntity<String> res = restTemplate.getForEntity("/mock/ex", String.class);
         assertResponse(EXCEPTION, HttpStatus.INTERNAL_SERVER_ERROR, res, objectMapper);
     }

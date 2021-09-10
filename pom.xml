@@ -50,7 +50,7 @@
         <!--        <module>chassis-infra/chassis-infra-eureka</module>-->
         <!--        <module>chassis-infra/chassis-infra-gateway</module>-->
         <!--        <module>chassis-middleware/chassis-middleware-api-client</module>-->
-        <!--        <module>chassis-middleware/chassis-middleware-core</module>-->
+        <module>chassis-middleware/chassis-middleware-core</module>
         <!--        <module>chassis-middleware/chassis-middleware-id-generator</module>-->
         <!--        <module>chassis-middleware/chassis-middleware-sample</module>-->
     </modules>

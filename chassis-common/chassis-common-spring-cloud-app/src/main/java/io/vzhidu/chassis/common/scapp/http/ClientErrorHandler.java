@@ -64,7 +64,7 @@ public class ClientErrorHandler implements EnvironmentAware {
             HttpMediaTypeNotSupportedException.class,
             MissingServletRequestParameterException.class
     })
-    public Response<?> handleInvalidInputException(HttpServletRequest request, Exception ex) {
+    public Response<Void> handleInvalidInputException(HttpServletRequest request, Exception ex) {
         return createHttpErrorInfo(RpcStatus.INVALID_ARGUMENT, request, new InvalidParameterException(ex.getMessage()));
     }
 
@@ -78,7 +78,7 @@ public class ClientErrorHandler implements EnvironmentAware {
     @ResponseBody
     @ResponseStatus(BAD_REQUEST)
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public Response<?> handleHttpMessageNotReadableException(HttpServletRequest request,
+    public Response<Void> handleHttpMessageNotReadableException(HttpServletRequest request,
                                                              HttpMessageNotReadableException ex) {
         Throwable t = ex.getCause();
         if (t instanceof InvalidFormatException) {
@@ -108,7 +108,7 @@ public class ClientErrorHandler implements EnvironmentAware {
     @ResponseBody
     @ResponseStatus(BAD_REQUEST)
     @ExceptionHandler(value = {InvalidParameterException.class})
-    public Response<?> handleInvalidParameterException(HttpServletRequest request, InvalidParameterException ex) {
+    public Response<Void> handleInvalidParameterException(HttpServletRequest request, InvalidParameterException ex) {
         return createHttpErrorInfo(RpcStatus.INVALID_ARGUMENT, request, ex);
     }
 
@@ -122,7 +122,7 @@ public class ClientErrorHandler implements EnvironmentAware {
     @ResponseBody
     @ResponseStatus(FORBIDDEN)
     @ExceptionHandler(value = PermissionDeniedException.class)
-    public Response<?> handlePermissionDeniedException(HttpServletRequest request, PermissionDeniedException ex) {
+    public Response<Void> handlePermissionDeniedException(HttpServletRequest request, PermissionDeniedException ex) {
         return createHttpErrorInfo(RpcStatus.PERMISSION_DENIED, request, ex);
     }
 
@@ -136,7 +136,7 @@ public class ClientErrorHandler implements EnvironmentAware {
     @ResponseBody
     @ResponseStatus(NOT_FOUND)
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-    public Response<?> handleRequestMethodNotSupportedException(HttpServletRequest request,
+    public Response<Void> handleRequestMethodNotSupportedException(HttpServletRequest request,
                                                                 HttpRequestMethodNotSupportedException ex) {
         return createHttpErrorInfo(RpcStatus.NOT_FOUND, request, new ResourceNotFoundException(ex.getMessage()));
     }
@@ -151,7 +151,7 @@ public class ClientErrorHandler implements EnvironmentAware {
     @ResponseBody
     @ResponseStatus(NOT_FOUND)
     @ExceptionHandler(ResourceNotFoundException.class)
-    public Response<?> handleNotFoundExceptions(HttpServletRequest request, ResourceNotFoundException ex) {
+    public Response<Void> handleNotFoundExceptions(HttpServletRequest request, ResourceNotFoundException ex) {
         return createHttpErrorInfo(RpcStatus.NOT_FOUND, request, ex);
     }
 
@@ -164,7 +164,7 @@ public class ClientErrorHandler implements EnvironmentAware {
     @ResponseBody
     @ResponseStatus(BAD_REQUEST)
     @ExceptionHandler(value = {BindException.class, MethodArgumentNotValidException.class})
-    public Response<?> handleBindingResultException(HttpServletRequest request, Throwable t) {
+    public Response<Void> handleBindingResultException(HttpServletRequest request, Throwable t) {
         BindingResult bindingResult = extractBindingResult(t);
         FieldError error = bindingResult.getFieldError();
         assert error != null;
@@ -191,7 +191,7 @@ public class ClientErrorHandler implements EnvironmentAware {
      * @param ex      异常
      * @return the response wrapped by {@link Response}
      */
-    protected Response<?> createHttpErrorInfo(RpcStatus status, HttpServletRequest request, Exception ex) {
+    protected Response<Void> createHttpErrorInfo(RpcStatus status, HttpServletRequest request, Exception ex) {
         ActiveSpan.error(ex);
         String traceId = TraceContext.traceId();
 

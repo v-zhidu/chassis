@@ -36,7 +36,7 @@ public abstract class AbstractChassisSpringBootApplication {
     /**
      * Default Constructor
      */
-    public AbstractChassisSpringBootApplication() {
+    protected AbstractChassisSpringBootApplication() {
         this.app = new SpringApplicationBuilder(getClass()).build();
     }
 

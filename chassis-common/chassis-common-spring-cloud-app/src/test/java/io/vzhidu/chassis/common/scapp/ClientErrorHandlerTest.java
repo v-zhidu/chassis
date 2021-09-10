@@ -24,7 +24,7 @@ import static io.vzhidu.chassis.common.scapp.ErrorResponseAssertion.*;
  * @author Zhiqiang Du Created at 2019/12/30
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class ClientErrorHandlerTest {
+class ClientErrorHandlerTest {
 
     @Autowired
     TestRestTemplate restTemplate;
@@ -33,7 +33,7 @@ public class ClientErrorHandlerTest {
     private ObjectMapper objectMapper;
 
     @Test
-    public void testMediaTypeException() throws IOException {
+    void testMediaTypeException() throws IOException {
         restTemplate.getRestTemplate().setInterceptors(
                 Collections.singletonList((request, body, execution) -> {
                     request.getHeaders().add("Content-Type", "text/plain");
@@ -46,13 +46,13 @@ public class ClientErrorHandlerTest {
     }
 
     @Test
-    public void testMissingServletRequestParameterException() throws IOException {
+    void testMissingServletRequestParameterException() throws IOException {
         ResponseEntity<String> res = restTemplate.getForEntity("/mock/get", String.class, "");
         assertResponse(MISSING_REQUEST_PARAMETER_EXCEPTION, HttpStatus.BAD_REQUEST, res, objectMapper);
     }
 
     @Test
-    public void testHttpMessageNotReadableException() throws IOException {
+    void testHttpMessageNotReadableException() throws IOException {
         CloseableHttpClient client = HttpClients.createDefault();
         HttpPost post = new HttpPost(restTemplate.getRootUri() + "/mock/post");
         CloseableHttpResponse response = client.execute(post);
@@ -64,7 +64,7 @@ public class ClientErrorHandlerTest {
     }
 
     @Test
-    public void testInvalidFormatException(@Autowired TestRestTemplate restTemplate) throws IOException {
+    void testInvalidFormatException(@Autowired TestRestTemplate restTemplate) throws IOException {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
@@ -76,7 +76,7 @@ public class ClientErrorHandlerTest {
     }
 
     @Test
-    public void testInvalidFormatExceptionWithInvalidDate(@Autowired TestRestTemplate restTemplate) throws IOException {
+    void testInvalidFormatExceptionWithInvalidDate(@Autowired TestRestTemplate restTemplate) throws IOException {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
@@ -88,7 +88,7 @@ public class ClientErrorHandlerTest {
     }
 
     @Test
-    public void testInvalidParameterException() throws IOException {
+    void testInvalidParameterException() throws IOException {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
@@ -101,7 +101,7 @@ public class ClientErrorHandlerTest {
     }
 
     @Test
-    public void testBindException(@Autowired TestRestTemplate restTemplate) throws IOException {
+    void testBindException(@Autowired TestRestTemplate restTemplate) throws IOException {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
@@ -113,19 +113,19 @@ public class ClientErrorHandlerTest {
     }
 
     @Test
-    public void testPermissionDeniedException() throws IOException {
+    void testPermissionDeniedException() throws IOException {
         ResponseEntity<String> res = restTemplate.getForEntity("/mock/get?id=0", String.class);
         assertResponse(PERMISSION_DENIED, HttpStatus.FORBIDDEN, res, objectMapper);
     }
 
     @Test
-    public void testRequestMethodNotSupportException() throws IOException {
+    void testRequestMethodNotSupportException() throws IOException {
         ResponseEntity<String> res = restTemplate.postForEntity("/mock/get", null, String.class);
         assertResponse(METHOD_NOT_SUPPORT, HttpStatus.NOT_FOUND, res, objectMapper);
     }
 
     @Test
-    public void testResourceNotFoundException() throws IOException {
+    void testResourceNotFoundException() throws IOException {
         ResponseEntity<String> res = restTemplate.getForEntity("/mock/get?id=-1", String.class);
         assertResponse(RESOURCE_NOT_FOUND, HttpStatus.NOT_FOUND, res, objectMapper);
     }
