@@ -22,7 +22,7 @@ Prerequisites for building code:
 * Java 11
 
 ```
-git clone git@repo.advai.net:p2p/chassis.git
+git clone https://github.com/v-zhidu/chassis.git
 
 cd chassis
 

@@ -384,7 +384,6 @@
                                 <exclude>jmock:*</exclude>
                                 <exclude>org.apache.maven:lib:tests</exclude>
                                 <exclude>log4j:log4j:jar:</exclude>
-<!--                                <exclude>io.vzhidu:chassis-build-tools:</exclude>-->
                             </excludes>
                         </artifactSet>
                     </configuration>

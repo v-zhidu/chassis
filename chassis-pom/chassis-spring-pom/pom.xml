@@ -158,11 +158,6 @@
                     <!-- exclude application-*.yml from JAR file. -->
                     <resource>
                         <directory>${basedir}/src/main/resources</directory>
-<!--                        <excludes>-->
-<!--                            <exclude>**/application*.yml</exclude>-->
-<!--                            <exclude>**/application*.yaml</exclude>-->
-<!--                            <exclude>**/application*.properties</exclude>-->
-<!--                        </excludes>-->
                     </resource>
                 </resources>
                 <plugins>
