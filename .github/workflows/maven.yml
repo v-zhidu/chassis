@@ -11,8 +11,10 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
+    env:
+      GITHUB_USER: ${{ secrets.USER }}
+      GITHUB_TOKEN: ${{ secrets.TOKEN }}
 
     steps:
       - uses: actions/checkout@v2
@@ -39,15 +41,15 @@ jobs:
          restore-keys: ${{ runner.os }}-m2
 
       - name: Build with Maven
-        run: ./mvnw -B package --file pom.xml
+        run: ./mvnw -s .mvn/settings.xml -B package --file pom.xml
 
       - name: SonarCloud Scan
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: ./mvnw -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.organization=v-zhidu -Dsonar.host.url=https://sonarcloud.io -Dsonar.projectKey=v-zhidu_chassis -Dsonar.coverage.jacoco.xmlReportPaths=target/jacoco-report/jacoco.xml
+        run: ./mvnw -s .mvn/settings.xml -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.organization=v-zhidu -Dsonar.host.url=https://sonarcloud.io -Dsonar.projectKey=v-zhidu_chassis -Dsonar.coverage.jacoco.xmlReportPaths=target/jacoco-report/jacoco.xml
 
       - name: Publish to GitHub Packages Apache Maven
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn --batch-mode deploy
+        run: mvn -s .mvn/settings.xml -B deploy -DskipTests
