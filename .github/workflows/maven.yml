@@ -13,8 +13,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      GITHUB_USER: ${{ secrets.USER }}
-      GITHUB_TOKEN: ${{ secrets.TOKEN }}
+      GITHUB_USER: ${{ secrets.MY_GITHUB_USER }}
+      GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
 
     steps:
       - uses: actions/checkout@v2
