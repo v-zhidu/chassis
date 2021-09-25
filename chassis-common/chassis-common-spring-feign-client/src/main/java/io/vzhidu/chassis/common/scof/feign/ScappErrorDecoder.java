@@ -1,7 +1,6 @@
 package io.vzhidu.chassis.common.scof.feign;
 
 import feign.Experimental;
-import feign.Response;
 import feign.codec.ErrorDecoder;
 
 /**

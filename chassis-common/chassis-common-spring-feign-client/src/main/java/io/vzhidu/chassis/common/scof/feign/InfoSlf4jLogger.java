@@ -1,7 +1,6 @@
 package io.vzhidu.chassis.common.scof.feign;
 
 import feign.Logger;
-import feign.Request;
 import feign.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.LoggerFactory;
