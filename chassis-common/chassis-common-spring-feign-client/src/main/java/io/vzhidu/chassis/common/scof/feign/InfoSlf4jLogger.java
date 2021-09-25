@@ -38,14 +38,6 @@ public class InfoSlf4jLogger extends Logger {
      * override default implementation of log request and response
      */
     @Override
-    protected void logRequest(String configKey, Level logLevel, Request request) {
-        super.logRequest(configKey, logLevel, request);
-    }
-
-    /**
-     * override default implementation of log request and response
-     */
-    @Override
     protected Response logAndRebufferResponse(String configKey,
                                               Level logLevel,
                                               Response response,
@@ -65,7 +57,7 @@ public class InfoSlf4jLogger extends Logger {
         // Not using SLF4J's support for parameterized messages (even though it would be more efficient)
         // because it would require the incoming message formats to be SLF4J-specific.
         if (logger.isInfoEnabled()) {
-            logger.info(String.format(methodTag(configKey) + format, args));
+            logger.info(methodTag(configKey) + String.format(format, args));
         }
     }
 }

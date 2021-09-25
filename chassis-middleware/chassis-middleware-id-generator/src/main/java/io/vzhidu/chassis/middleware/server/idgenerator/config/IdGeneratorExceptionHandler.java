@@ -30,7 +30,7 @@ public class IdGeneratorExceptionHandler extends ClientErrorHandler {
     @ResponseBody
     @ResponseStatus(INTERNAL_SERVER_ERROR)
     @ExceptionHandler({IdGenerateException.class})
-    public Response<?> handleIdentifierGeneratorServerException(HttpServletRequest request, Exception ex) {
+    public Response<Void> handleIdentifierGeneratorServerException(HttpServletRequest request, Exception ex) {
         return createHttpErrorInfo(RpcStatus.INTERNAL, request, ex);
     }
 }

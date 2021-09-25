@@ -13,13 +13,13 @@ import java.util.List;
  * @author Zhiqiang Du created at 2021/5/12
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class FeignClientTest {
+class FeignClientTest {
 
     @Autowired
     Github github;
 
     @Test
-    public void test() {
+    void test() {
         // Fetch and print a list of the contributors to this library.
         List<Github.Contributor> contributors = github.contributors("OpenFeign", "feign");
         Assertions.assertFalse(contributors.isEmpty());

@@ -11,12 +11,4 @@ import feign.codec.ErrorDecoder;
  */
 @Experimental
 public class ScappErrorDecoder extends ErrorDecoder.Default {
-
-    /**
-     * 未实现
-     */
-    @Override
-    public Exception decode(String methodKey, Response response) {
-        return super.decode(methodKey, response);
-    }
 }
