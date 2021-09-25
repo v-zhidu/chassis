@@ -31,20 +31,29 @@ jobs:
         uses: actions/cache@v1
         with:
           path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
+          key: ${{ runner.os }}-m2-${{ env.cache-name }}-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-m2-${{ env.cache-name }}-
 
-  build:
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
       - name: Build with Maven
-        run: ./mvnw -s .mvn/settings.xml -B package --file pom.xml
+        run: |
+          ./mvnw -s .mvn/settings.xml -B package --file pom.xml
+
+      - name: Upload Build Directory
+        uses: actions/upload-artifact@v2
+        with:
+          name: build-directory
+          path: ./
 
   analysis:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: Download Build Directory
+        uses: actions/download-artifact@v2
+        with:
+          name: build-directory
+
       - name: Cache SonarCloud packages
         uses: actions/cache@v1
         with:
@@ -56,13 +65,24 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: ./mvnw -s .mvn/settings.xml -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.organization=v-zhidu -Dsonar.host.url=https://sonarcloud.io -Dsonar.projectKey=v-zhidu_chassis -Dsonar.coverage.jacoco.xmlReportPaths=target/jacoco-report/jacoco.xml
+        run: |
+          ./mvnw -s .mvn/settings.xml -B verify \
+          org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+          -Dsonar.organization=v-zhidu -Dsonar.host.url=https://sonarcloud.io \
+          -Dsonar.projectKey=v-zhidu_chassis \
+          -Dsonar.coverage.jacoco.xmlReportPaths=target/jacoco-report/jacoco.xml
 
   artifacts:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: Download Build Directory
+        uses: actions/download-artifact@v2
+        with:
+          name: build-directory
+
       - name: Publish to GitHub Packages Apache Maven
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn -s .mvn/settings.xml -B deploy -DskipTests
+        run: |
+          ./mvnw -s .mvn/settings.xml -B deploy -DskipTests
