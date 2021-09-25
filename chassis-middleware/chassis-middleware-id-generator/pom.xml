@@ -15,9 +15,8 @@
     <packaging>jar</packaging>
 
     <properties>
-        <leaf.version>1.0.1</leaf.version>
-        <leaf.curator.version>2.6.0</leaf.curator.version>
-        <leaf.guava.version>16.0.1</leaf.guava.version>
+        <leaf.version>1.0.2</leaf.version>
+        <leaf.curator.version>5.2.0</leaf.curator.version>
     </properties>
 
     <dependencies>
@@ -71,18 +70,8 @@
         <dependency>
             <groupId>org.apache.curator</groupId>
             <artifactId>curator-recipes</artifactId>
-            <version>2.6.0</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.apache.curator</groupId>
-            <artifactId>curator-framework</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-        </dependency>
     </dependencies>
 
     <dependencyManagement>
@@ -93,34 +82,10 @@
                 <version>${leaf.curator.version}</version>
                 <exclusions>
                     <exclusion>
-                        <groupId>org.apache.curator</groupId>
-                        <artifactId>curator-framework</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>com.google.guava</groupId>
-                        <artifactId>guava</artifactId>
-                    </exclusion>
-                    <exclusion>
                         <artifactId>log4j</artifactId>
                         <groupId>log4j</groupId>
                     </exclusion>
                 </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.curator</groupId>
-                <artifactId>curator-framework</artifactId>
-                <version>${leaf.curator.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>com.google.guava</groupId>
-                        <artifactId>guava</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>com.google.guava</groupId>
-                <artifactId>guava</artifactId>
-                <version>${leaf.guava.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

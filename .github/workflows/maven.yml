@@ -13,6 +13,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
+      # Github默认生成的GITHUB_TOKEN没有读取packages权限
       GITHUB_USER: ${{ secrets.MY_GITHUB_USER }}
       GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
 
