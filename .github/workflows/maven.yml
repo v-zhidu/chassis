@@ -53,6 +53,8 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-directory
+        run: |
+          cd chassis
 
       - name: Cache SonarCloud packages
         uses: actions/cache@v1
@@ -66,10 +68,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          ./mvnw -s .mvn/settings.xml -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
-          -Dsonar.organization=v-zhidu -Dsonar.host.url=https://sonarcloud.io \
-          -Dsonar.projectKey=v-zhidu_chassis \
-          -Dsonar.coverage.jacoco.xmlReportPaths=target/jacoco-report/jacoco.xml
+          ./mvnw -s .mvn/settings.xml -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.organization=v-zhidu -Dsonar.host.url=https://sonarcloud.io -Dsonar.projectKey=v-zhidu_chassis -Dsonar.coverage.jacoco.xmlReportPaths=target/jacoco-report/jacoco.xml
 
   artifacts:
     needs: build
@@ -79,6 +78,10 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-directory
+        run: |
+          ls
+          cd chassis
+          ls
 
       - name: Publish to GitHub Packages Apache Maven
         env:
