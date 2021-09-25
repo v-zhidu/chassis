@@ -1,7 +1,6 @@
 package io.vzhidu.chassis.common.scapp;
 
 import org.hibernate.validator.constraints.Length;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;

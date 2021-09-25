@@ -4,7 +4,6 @@ import io.vzhidu.chassis.common.core.ex.InvalidParameterException;
 import io.vzhidu.chassis.common.core.ex.PermissionDeniedException;
 import io.vzhidu.chassis.common.core.ex.ResourceNotFoundException;
 import io.vzhidu.chassis.common.core.rpc.Response;
-import io.vzhidu.chassis.common.core.rpc.RpcStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;

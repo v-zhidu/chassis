@@ -1,0 +1,18 @@
+chassis:
+  app:
+    name: chassis-middleware-sample
+    port: 19781
+
+spring:
+  cloud:
+    discovery:
+      client:
+        simple:
+          instances:
+            chassis-middleware-id-generator:
+              - service-id: chassis-middleware-id-generator-1
+                uri: http://127.0.0.1:9781
+
+logging:
+  level:
+    io.vzhidu.chassis.middleware.client.idgenerator.IdGeneratorServiceFeignClient: DEBUG

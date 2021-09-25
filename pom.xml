@@ -45,12 +45,12 @@
         <module>chassis-common/chassis-common-core</module>
         <module>chassis-common/chassis-common-spring-cloud-app</module>
         <module>chassis-common/chassis-common-spring-data-jdbc</module>
-        <!--        <module>chassis-common/chassis-common-spring-feign-client</module>-->
+        <module>chassis-common/chassis-common-spring-feign-client</module>
         <!--        <module>chassis-dist</module>-->
-        <!--        <module>chassis-middleware/chassis-middleware-api-client</module>-->
+        <module>chassis-middleware/chassis-middleware-api-client</module>
         <module>chassis-middleware/chassis-middleware-core</module>
         <module>chassis-middleware/chassis-middleware-id-generator</module>
-        <!--        <module>chassis-middleware/chassis-middleware-sample</module>-->
+        <module>chassis-middleware/chassis-middleware-sample</module>
     </modules>
 
     <properties>
