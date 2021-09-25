@@ -19,13 +19,11 @@
         <dependency>
             <groupId>io.vzhidu</groupId>
             <artifactId>chassis-common-spring-cloud-app</artifactId>
-            <version>${project.version}</version>
         </dependency>
 
         <dependency>
             <groupId>io.vzhidu</groupId>
             <artifactId>chassis-middleware-api-client</artifactId>
-            <version>${project.version}</version>
         </dependency>
     </dependencies>
 </project>

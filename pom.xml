@@ -46,7 +46,7 @@
         <module>chassis-common/chassis-common-spring-cloud-app</module>
         <module>chassis-common/chassis-common-spring-data-jdbc</module>
         <module>chassis-common/chassis-common-spring-feign-client</module>
-        <!--        <module>chassis-dist</module>-->
+        <module>chassis-dist</module>
         <module>chassis-middleware/chassis-middleware-api-client</module>
         <module>chassis-middleware/chassis-middleware-core</module>
         <module>chassis-middleware/chassis-middleware-id-generator</module>
@@ -72,6 +72,26 @@
             <dependency>
                 <groupId>io.vzhidu</groupId>
                 <artifactId>chassis-common-spring-cloud-app</artifactId>
+                <version>${chassis.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.vzhidu</groupId>
+                <artifactId>chassis-common-spring-data-jdbc</artifactId>
+                <version>${chassis.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.vzhidu</groupId>
+                <artifactId>chassis-common-spring-feign-client</artifactId>
+                <version>${chassis.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.vzhidu</groupId>
+                <artifactId>chassis-middleware-core</artifactId>
+                <version>${chassis.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.vzhidu</groupId>
+                <artifactId>chassis-middleware-api-client</artifactId>
                 <version>${chassis.version}</version>
             </dependency>
         </dependencies>
