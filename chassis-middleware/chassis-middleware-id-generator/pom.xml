@@ -17,6 +17,7 @@
     <properties>
         <leaf.version>1.0.2</leaf.version>
         <leaf.curator.version>5.2.0</leaf.curator.version>
+        <maven.deploy.skip>true</maven.deploy.skip>
     </properties>
 
     <dependencies>
