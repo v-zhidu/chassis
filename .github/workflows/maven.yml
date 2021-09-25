@@ -67,7 +67,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          cd chassis
+          chmod +x mvnw
           ./mvnw -s .mvn/settings.xml -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.organization=v-zhidu -Dsonar.host.url=https://sonarcloud.io -Dsonar.projectKey=v-zhidu_chassis -Dsonar.coverage.jacoco.xmlReportPaths=target/jacoco-report/jacoco.xml
 
   artifacts:
@@ -83,7 +83,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          ls
-          cd chassis
-          ls
+          chmod +x mvnw
           ./mvnw -s .mvn/settings.xml -B deploy -DskipTests
