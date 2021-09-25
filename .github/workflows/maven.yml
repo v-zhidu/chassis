@@ -10,7 +10,7 @@ on:
     branches: [ main ]
 
 jobs:
-  setup:
+  build:
     runs-on: ubuntu-latest
     env:
       # Github默认生成的GITHUB_TOKEN没有读取packages权限
@@ -66,8 +66,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          ./mvnw -s .mvn/settings.xml -B verify \
-          org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+          ./mvnw -s .mvn/settings.xml -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
           -Dsonar.organization=v-zhidu -Dsonar.host.url=https://sonarcloud.io \
           -Dsonar.projectKey=v-zhidu_chassis \
           -Dsonar.coverage.jacoco.xmlReportPaths=target/jacoco-report/jacoco.xml
