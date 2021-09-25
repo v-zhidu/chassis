@@ -44,6 +44,7 @@ jobs:
         with:
           name: build-directory
           path: ./
+          retention-days: 1
 
   analysis:
     needs: build
@@ -77,10 +78,6 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-directory
-        run: |
-          ls
-          cd chassis
-          ls
 
       - name: Publish to GitHub Packages Apache Maven
         env:
