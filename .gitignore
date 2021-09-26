@@ -270,3 +270,4 @@ gradle-app.setting
 build-target
 **/application-*.yml
 **/git.properties
+!chassis-dist/src/main/dist/bin
