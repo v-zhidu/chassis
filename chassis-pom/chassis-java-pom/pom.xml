@@ -202,8 +202,17 @@
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
+                <artifactId>maven-jar-plugin</artifactId>
             </plugin>
+
+            <!-- 使用shade构建spring boot应用程序，需要显式指定mainClass-->
+            <!-- issue: 如果使用spring-boot-maven-plugin repackage, 会引发SpringBootVersion获取错误的问题 -->
+            <!-- 所以停用maven-shade-plugin -->
+
+            <!--            <plugin>-->
+            <!--                <groupId>org.apache.maven.plugins</groupId>-->
+            <!--                <artifactId>maven-shade-plugin</artifactId>-->
+            <!--            </plugin>-->
 
             <!-- Phrase 4: Testing -->
             <plugin>
@@ -357,6 +366,19 @@
                 <!-- @formatter:off -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <configuration>
+                        <archive>
+                            <manifest>
+                                <mainClass>${main-class}</mainClass>
+                                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            </manifest>
+                        </archive>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-shade-plugin</artifactId>
                     <version>3.2.4</version>
                     <configuration>
@@ -366,8 +388,6 @@
                             <filter>
                                 <artifact>*:*</artifact>
                                 <excludes>
-                                    <exclude>module-info.class</exclude>
-                                    <exclude>META-INF/*.MF</exclude>
                                     <exclude>META-INF/*.SF</exclude>
                                     <exclude>META-INF/*.DSA</exclude>
                                     <exclude>META-INF/*.RSA</exclude>
@@ -395,14 +415,9 @@
                             </goals>
                             <configuration>
                                 <transformers>
-                                    <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                        <mainClass>${main.class}</mainClass>
-                                    </transformer>
-                                    <transformer implementation="org.apache.maven.plugins.shade.resource.ApacheLicenseResourceTransformer">
-                                    </transformer>
-                                    <transformer implementation="org.apache.maven.plugins.shade.resource.ApacheNoticeResourceTransformer">
-                                        <addHeader>false</addHeader>
-                                    </transformer>
+                                    <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer"><mainClass>${main-class}</mainClass></transformer>
+                                    <transformer implementation="org.apache.maven.plugins.shade.resource.ApacheLicenseResourceTransformer"/>
+                                    <transformer implementation="org.apache.maven.plugins.shade.resource.ApacheNoticeResourceTransformer"><addHeader>false</addHeader></transformer>
                                 </transformers>
                             </configuration>
                         </execution>

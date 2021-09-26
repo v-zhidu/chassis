@@ -267,7 +267,6 @@ gradle-app.setting
 
 # End of https://www.toptal.com/developers/gitignore/api/java,groovy,gradle,maven,git,jetbrains+iml,vim,eclipse,vscode
 
-/build-target/
-/kubernetes
+build-target
 **/application-*.yml
 **/git.properties
