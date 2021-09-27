@@ -44,35 +44,53 @@ install_pack_cli() {
     fi
 }
 
+while getopts ":p:" opt; do
+  case ${opt} in
+  p )
+    image_prefix=$OPTARG
+    ;;
+  \? )
+    echo "Invalid Option: -$OPTARG" 1>&2
+    echo "Options:"
+    echo "  -p        Image prefix"
+    exit 1
+    ;;
+  esac
+done
+shift $((OPTIND -1))
+
+install_pack_cli
+pack config default-builder paketobuildpacks/builder:base
+pack builder suggest
+cd app/
+
 case "${subcommand}" in
   (build)
-    while getopts ":p:" opt; do
-      case ${opt} in
-        p )
-          image_prefix=$OPTARG
-          ;;
-        \? )
-          echo "Invalid Option: -$OPTARG" 1>&2
-          echo "Options:"
-          echo "  -p        Image prefix"
-          exit 1
-          ;;
-      esac
-    done
-    shift $((OPTIND -1))
 
-    install_pack_cli
-    pack config default-builder paketobuildpacks/builder:base
-    pack builder suggest
-    cd app/
+  for filename in *.jar; do
+    app_name=`echo $filename | rev | cut -d "-" -f3-$n | rev`
+    app_version=`echo $filename | rev | cut -d "-" -f 1-2 | cut -d '.' -f 2-$n | rev`
+    image_name=$([ "${image_prefix}" ] && echo "${image_prefix}/${app_name}:${app_version}" ||echo "${app_name}:${app_version}")
 
-    for filename in *.jar; do
-        app_name=`echo $filename | rev | cut -d "-" -f3-$n | rev`
-        app_version=`echo $filename | rev | cut -d "-" -f 1-2 | cut -d '.' -f 2-$n | rev`
-        image_name=$([ "${image_prefix}" ] && echo "${image_prefix}/${app_name}:${app_version}" ||echo "${app_name}:${app_version}")
-
-        echo "Building image ----> ${image_name}"
-        pack build $image_name --path $filename
-    done
+    echo "Building image ----> ${image_name}"
+    pack build $image_name --path $filename
+  done
   ;;
+
+  (publish)
+
+  for filename in *.jar; do
+    app_name=`echo $filename | rev | cut -d "-" -f3-$n | rev`
+    app_version=`echo $filename | rev | cut -d "-" -f 1-2 | cut -d '.' -f 2-$n | rev`
+    image_name=$([ "${image_prefix}" ] && echo "${image_prefix}/${app_name}:${app_version}" ||echo "${app_name}:${app_version}")
+
+    echo "Publish image to registry ----> ${image_name}"
+    docker push $image_name
+  done
+  ;;
+
+  (*)
+
+  usage
+
 esac
