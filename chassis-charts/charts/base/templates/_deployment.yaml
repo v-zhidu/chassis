@@ -1,0 +1,158 @@
+{{/*Create a deployment onto kubernetes*/}}
+{{- define "base.deployment.tpl" -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{ include "base.name" . }}-deploy"
+  labels:
+    {{- include "base.labels" . | nindent 4 }}
+    {{- include "base.deployment.metadata.labels" . | indent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "base.selectorLabels" . | nindent 6 }}
+      {{- include "base.deployment.selectorLabels" . | indent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "base.selectorLabels" . | nindent 8 }}
+        {{- include "base.deployment.selectorLabels" . | indent 8 }}
+      annotations:
+        {{- include "base.deployment.spec.template.metadata.annotations" . | indent 8 }}
+    spec:
+      containers:
+        {{- $deployment := merge (default dict .Values.deployment) .Values.global.deployment }}
+        {{- $imageName := $deployment.image.name | default (include "base.name" .) }}
+        - name: {{ include "base.name" . }}
+          image: "{{ $deployment.image.prefix }}/{{ $imageName }}:{{ $deployment.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ $deployment.image.pullPolicy }}
+          volumeMounts:
+            {{- include "base.configmap.helper.container.volumeMounts" . | indent 12 }}
+          {{- include "base.deployment.spec.template.spec.containers.ports" . | indent 10 }}
+          {{- include "base.deployment.spec.template.spec.containers.probes" . | indent 10 }}
+          {{- include "base.deployment.spec.template.spec.containers.envs" . | indent 10 }}
+      volumes:
+        {{- include "base.configmap.helper.volumns" . | indent 8 }}
+      {{- include "base.deployment.spec.template.spec.imagePullSecrets" . | indent 6 }}
+      {{- include "base.deployment.spec.template.spec.nodeSelectors" . | indent 6 }}
+      {{- include "base.deployment.spec.template.spec.affinities" . | indent 6 }}
+      {{- include "base.deployment.spec.template.spec.tolerations" . | indent 6 }}
+  {{- include "base.deployment.spec.replicas" . | indent 2 }}
+{{- end }}
+
+
+{{/*base.deployment.metadata.labels"*/}}
+{{- define "base.deployment.metadata.labels" -}}
+{{- $deployment := merge (default dict .Values.deployment) .Values.global.deployment }}
+{{- with $deployment.labels }}
+{{ toYaml . }}
+{{- end }}
+{{- end }}
+
+{{/*base.deployment.spec.replicas */}}
+{{- define "base.deployment.spec.replicas" -}}
+{{- $deployment := merge (default dict .Values.deployment) .Values.global.deployment }}
+{{- if not $deployment.autoscaling.enabled }}
+replicas: {{ $deployment.replicaCount }}
+{{- end }}
+{{- end }}
+
+{{/*base.deployment.selectorLabels*/}}
+{{- define "base.deployment.selectorLabels" -}}
+{{- $deployment := merge (default dict .Values.deployment) .Values.global.deployment }}
+{{- with $deployment.selectorLabels }}
+{{ toYaml . }}
+{{- end }}
+{{- end }}
+
+{{/*base.deployment.spec.template.metadata.annotations*/}}
+{{- define "base.deployment.spec.template.metadata.annotations" -}}
+{{- $deployment := merge (default dict .Values.deployment) .Values.global.deployment }}
+{{- with $deployment.annotations }}
+{{ toYaml . }}
+{{- end }}
+{{- end }}
+
+{{/*base.deployment.spec.template.spec.imagePullSecrets*/}}
+{{- define "base.deployment.spec.template.spec.imagePullSecrets" -}}
+{{- $deployment := merge (default dict .Values.deployment) .Values.global.deployment }}
+{{- with $deployment.image.pullSecrets }}
+imagePullSecrets:
+{{- toYaml . | nindent 2 }}
+{{- end }}
+{{- end }}
+
+{{/*base.deployment.spec.template.spec.containers.ports*/}}
+{{- define "base.deployment.spec.template.spec.containers.ports" -}}
+{{- $deployment := merge (default dict .Values.deployment) .Values.global.deployment }}
+{{- with $deployment.container.ports }}
+ports:
+{{- range $key, $val := . }}
+  - name: {{ $key }}
+    containerPort: {{ $val }}
+    protocol: TCP
+{{- end }}
+{{- end }}
+{{- end }}
+
+{{/*base.deployment.spec.template.spec.containers.probes*/}}
+{{- define "base.deployment.spec.template.spec.containers.probes" -}}
+{{- $deployment := merge (default dict .Values.deployment) .Values.global.deployment }}
+{{- with $deployment.container.probes.liveness }}
+livenessProbe:
+  httpGet:
+    path: {{ .path }}
+    port: {{ .port }}
+  initialDelaySeconds: 5
+  periodSeconds: 10
+  failureThreshold: 3
+{{- end }}
+{{- with $deployment.container.probes.readiness }}
+readinessProbe:
+  httpGet:
+    path: {{ .path }}
+    port: {{ .port }}
+  initialDelaySeconds: 5
+  periodSeconds: 10
+  failureThreshold: 3
+{{- end }}
+{{- end }}
+
+{{/*base.deployment.spec.template.spec.containers.envs*/}}
+{{- define "base.deployment.spec.template.spec.containers.envs" -}}
+{{- $deployment := merge (default dict .Values.deployment) .Values.global.deployment }}
+{{- with $deployment.container.envs }}
+env:
+{{- range $key, $val := . }}
+  - name: {{ $key | quote }}
+    value: {{ $val | quote }}
+{{- end }}
+{{- end }}
+{{- end }}
+
+{{/*base.deployment.spec.template.spec.nodeSelector*/}}
+{{- define "base.deployment.spec.template.spec.nodeSelectors" -}}
+{{- $deployment := merge (default dict .Values.deployment) .Values.global.deployment }}
+{{- with $deployment.nodeSelectors }}
+nodeSelector:
+{{- toYaml . | nindent 2 }}
+{{- end }}
+{{- end }}
+
+{{/*base.deployment.spec.template.spec.affinity*/}}
+{{- define "base.deployment.spec.template.spec.affinities" -}}
+{{- $deployment := merge (default dict .Values.deployment) .Values.global.deployment }}
+{{- with $deployment.affinities }}
+affinity:
+{{- toYaml . | nindent 2 }}
+{{- end }}
+{{- end }}
+
+{{/*base.deployment.spec.template.spec.tolerations*/}}
+{{- define "base.deployment.spec.template.spec.tolerations" -}}
+{{- $deployment := merge (default dict .Values.deployment) .Values.global.deployment }}
+{{- with $deployment.tolerations }}
+tolerations:
+{{- toYaml . | nindent 2 }}
+{{- end }}
+{{- end }}

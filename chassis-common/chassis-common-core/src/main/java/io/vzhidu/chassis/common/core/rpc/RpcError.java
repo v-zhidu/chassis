@@ -1,9 +1,12 @@
 package io.vzhidu.chassis.common.core.rpc;
 
+import io.vzhidu.chassis.common.core.ex.InternalException;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * RPC错误返回数据模型
@@ -132,6 +135,26 @@ public class RpcError {
             error.setMessage(message);
 
             return error;
+        }
+    }
+
+    /**
+     * Translate {@link RpcError} to {@link Exception} according the {@link RpcError#type}
+     */
+    public static Exception translateTo(RpcError error, Throwable cause) {
+        if (error == null || error.getType() == null) {
+            throw new IllegalStateException("RpcError is empty or invalid");
+        }
+
+        try {
+            return (Exception) Class.forName(error.getType())
+                    .getConstructor(String.class, Throwable.class).newInstance(error.getMessage(), cause);
+        } catch (ClassNotFoundException |
+                NoSuchMethodException |
+                InstantiationException |
+                IllegalAccessException |
+                InvocationTargetException e) {
+            return new InternalException(e.getMessage(), e);
         }
     }
 }

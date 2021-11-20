@@ -28,7 +28,7 @@
 
         <dependency>
             <groupId>io.vzhidu</groupId>
-            <artifactId>chassis-common-spring-cloud-app</artifactId>
+            <artifactId>chassis-common-spring-web</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>

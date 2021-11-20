@@ -27,7 +27,7 @@ SYMLINK_RESOLVED_BIN=`cd "${CUR_DIR}"; pwd -P`
 WORK_HOME=`dirname "$SYMLINK_RESOLVED_BIN"`
 BIN_DIR=$WORK_HOME/bin
 APP_DIR=$WORK_HOME/app
-CONF_DIR=$WORK_HOME/config
+CONF_DIR=$WORK_HOME/conf
 LOG_DIR=$WORK_HOME/log
 
 SERVICE_FILE=${CONF_DIR}/service
@@ -57,7 +57,7 @@ if [ -z "${MY_JAVA_HOME}" ]; then
 fi
 
 if [ -z "${MY_JAVA_HOME}" ] && ! type java > /dev/null 2> /dev/null; then
-    echo "Please specify JAVA_HOME. Either in config ./conf/conf.yaml or as system-wide JAVA_HOME."
+    echo "Please specify JAVA_HOME. Either in config conf/.env or as system-wide JAVA_HOME."
     exit 1
 else
     JAVA_HOME=${MY_JAVA_HOME}

@@ -6,80 +6,50 @@
         <format>dir</format>
     </formats>
 
-    <includeBaseDirectory>true</includeBaseDirectory>
-    <baseDirectory>${project.name}-${project.version}</baseDirectory>
+    <includeBaseDirectory>false</includeBaseDirectory>
 
     <dependencySets>
+        <!-- Copy web servers-->
+        <dependencySet>
+            <outputDirectory>app/</outputDirectory>
+            <includes>
+                <include>io.vzhidu:*-server:jar:*</include>
+            </includes>
+            <excludes/>
+            <fileMode>0644</fileMode>
+            <directoryMode>0755</directoryMode>
+            <useStrictFiltering>false</useStrictFiltering>
+            <unpack>false</unpack>
+            <scope>runtime</scope>
+        </dependencySet>
+
+        <!-- Copy libraries -->
+        <dependencySet>
+            <outputDirectory>lib/</outputDirectory>
+            <includes>
+                <include>io.vzhidu*-api-client:jar:*</include>
+            </includes>
+            <excludes/>
+            <fileMode>0644</fileMode>
+            <directoryMode>0755</directoryMode>
+            <useStrictFiltering>false</useStrictFiltering>
+            <unpack>false</unpack>
+            <scope>provided</scope>
+        </dependencySet>
     </dependencySets>
 
-    <files>
-        <file>
-            <source>
-                ../chassis-middleware/chassis-middleware-id-generator/target/chassis-middleware-id-generator-${project.version}.jar
-            </source>
-            <outputDirectory>app</outputDirectory>
-            <fileMode>0644</fileMode>
-        </file>
-
-        <file>
-            <source>
-                ../chassis-middleware/chassis-middleware-sample/target/chassis-middleware-sample-${project.version}.jar
-            </source>
-            <outputDirectory>app</outputDirectory>
-            <fileMode>0644</fileMode>
-        </file>
-
-        <file>
-            <source>
-                ../chassis-middleware/chassis-middleware-id-generator/src/main/resources/application.yml
-            </source>
-            <outputDirectory>config/application/</outputDirectory>
-            <destName>chassis-middleware-id-generator.yml</destName>
-            <fileMode>0644</fileMode>
-        </file>
-
-        <file>
-            <source>
-                ../chassis-middleware/chassis-middleware-sample/src/main/resources/application.yml
-            </source>
-            <outputDirectory>config/application/</outputDirectory>
-            <destName>chassis-middleware-sample.yml</destName>
-            <fileMode>0644</fileMode>
-        </file>
-
-        <!-- copy the config file -->
-    </files>
-
+    <!-- copy the config file -->
     <fileSets>
         <fileSet>
             <directory>src/main/dist/</directory>
             <outputDirectory/>
-            <fileMode>0644</fileMode>
+            <fileMode>0755</fileMode>
+            <directoryMode>0755</directoryMode>
             <includes>
                 <include>*.txt</include>
+                <include>bin/</include>
+                <include>conf/</include>
             </includes>
         </fileSet>
-
-        <!-- copy start scripts -->
-        <fileSet>
-            <directory>src/main/dist/bin</directory>
-            <outputDirectory>bin/</outputDirectory>
-            <fileMode>0755</fileMode>
-        </fileSet>
-
-        <!-- copy default logging configuration -->
-        <fileSet>
-            <directory>src/main/dist/config</directory>
-            <outputDirectory>config</outputDirectory>
-            <fileMode>0644</fileMode>
-        </fileSet>
-
-        <!-- copy the docker files -->
-<!--        <fileSet>-->
-<!--            <directory>src/main/dist/docker</directory>-->
-<!--            <outputDirectory>docker/</outputDirectory>-->
-<!--            <fileMode>0755</fileMode>-->
-<!--            <filtered>true</filtered>-->
-<!--        </fileSet>-->
     </fileSets>
 </assembly>

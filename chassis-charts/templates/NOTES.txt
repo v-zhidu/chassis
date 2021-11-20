@@ -1,0 +1,3 @@
+Thanks you for installing {{ .Chart.Name }}.
+
+Current release is {{ .Release.Name }}.

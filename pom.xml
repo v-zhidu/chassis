@@ -43,14 +43,17 @@
         <module>chassis-pom/chassis-java-pom</module>
         <module>chassis-pom/chassis-spring-pom</module>
         <module>chassis-common/chassis-common-core</module>
-        <module>chassis-common/chassis-common-spring-cloud-app</module>
         <module>chassis-common/chassis-common-spring-data-jdbc</module>
         <module>chassis-common/chassis-common-spring-feign-client</module>
+        <module>chassis-common/chassis-common-spring-gateway</module>
+        <module>chassis-common/chassis-common-spring-mybatis</module>
+        <module>chassis-common/chassis-common-spring-stream</module>
+        <module>chassis-common/chassis-common-spring-web</module>
         <module>chassis-dist</module>
         <module>chassis-middleware/chassis-middleware-api-client</module>
         <module>chassis-middleware/chassis-middleware-core</module>
-        <module>chassis-middleware/chassis-middleware-id-generator</module>
-        <module>chassis-middleware/chassis-middleware-sample</module>
+        <module>chassis-middleware/chassis-middleware-id-generator-server</module>
+        <module>chassis-middleware/chassis-middleware-sample-server</module>
     </modules>
 
     <properties>
@@ -71,17 +74,32 @@
             </dependency>
             <dependency>
                 <groupId>io.vzhidu</groupId>
-                <artifactId>chassis-common-spring-cloud-app</artifactId>
-                <version>${chassis.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.vzhidu</groupId>
                 <artifactId>chassis-common-spring-data-jdbc</artifactId>
                 <version>${chassis.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.vzhidu</groupId>
                 <artifactId>chassis-common-spring-feign-client</artifactId>
+                <version>${chassis.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.vzhidu</groupId>
+                <artifactId>chassis-common-spring-gateway</artifactId>
+                <version>${chassis.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.vzhidu</groupId>
+                <artifactId>chassis-common-spring-mybatis</artifactId>
+                <version>${chassis.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.vzhidu</groupId>
+                <artifactId>chassis-common-spring-stream</artifactId>
+                <version>${chassis.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.vzhidu</groupId>
+                <artifactId>chassis-common-spring-web</artifactId>
                 <version>${chassis.version}</version>
             </dependency>
             <dependency>

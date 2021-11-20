@@ -1,0 +1,34 @@
+global:
+  configmap:
+    name: ""
+    files: ""
+  deployment:
+    image:
+      prefix: ""
+      name: ""
+      pullPolicy: IfNotPresent
+      pullSecrets: []
+      tag: ""
+    container:
+      ports: {}
+      probes:
+        liveness:
+          path: ""
+          port: 80
+        readiness:
+          path: ""
+          port: 80
+      envs: {}
+    annotations: {}
+    labels: {}
+    selectorLabels: {}
+    nodeSelectors: {}
+    affinities: {}
+    tolerations: []
+    replicaCount: 1
+    autoscaling:
+      enabled: false
+  service:
+    labels: {}
+    selectorLabels: {}
+    ports: {}

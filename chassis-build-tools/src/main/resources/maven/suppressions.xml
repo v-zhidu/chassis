@@ -27,5 +27,7 @@ under the License.
 	<suppress files="CurrencyCode.java" checks="FileLength"/>
 	<suppress files="CountryCode.java" checks="MagicNumberCheck"/>
 	<suppress files="CountryCode.java" checks="FileLength"/>
-	<suppress files="IdMonitorServiceImpl.java" checks="MagicNumberCheck"/>
+	<suppress files="IdMonitorImpl.java" checks="MagicNumberCheck"/>
+	<suppress files="HttpStatus.java" checks="LineLength"/>
+	<suppress files="HttpStatus.java" checks="MagicNumberCheck"/>
 </suppressions>

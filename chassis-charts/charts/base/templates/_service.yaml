@@ -1,0 +1,49 @@
+{{/*Create a service onto kubernetes*/}}
+{{- define "base.service.tpl" -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: "{{ include "base.name" . }}-svc"
+  labels:
+    {{- include "base.labels" . | nindent 4 }}
+    {{- include "base.deployment.metadata.labels" . | indent 4 }}
+    {{- include "base.service.metadata.labels" . | indent 4 }}
+spec:
+  selector:
+    {{- include "base.selectorLabels" . | nindent 4 }}
+    {{- include "base.deployment.selectorLabels" . | indent 4 }}
+    {{- include "base.service.selectorLabels" . | indent 4 }}
+  type: ClusterIP
+  ports:
+    {{- include "base.service.spec.ports" . | indent 4}}
+{{- end }}
+
+
+{{/*base.service.metadata.labels*/}}
+{{- define "base.service.metadata.labels" -}}
+{{- $service := merge (default dict .Values.service) .Values.global.service }}
+{{- with $service.labels }}
+{{ toYaml . }}
+{{- end }}
+{{- end }}
+
+{{/*base.service.selectorLabels*/}}
+{{- define "base.service.selectorLabels" -}}
+{{- $service := merge (default dict .Values.service) .Values.global.service }}
+{{- with $service.selectorLabels }}
+{{ toYaml . }}
+{{- end }}
+{{- end }}
+
+{{/*base.deployment.spec.ports*/}}
+{{- define "base.service.spec.ports" -}}
+{{- $service := merge (default dict .Values.service) .Values.global.service }}
+{{- with $service.ports }}
+{{- range $key, $val := . }}
+- name: {{ $key }}
+  port: {{ $val }}
+  targetPort: api
+  protocol: TCP
+{{- end }}
+{{- end }}
+{{- end }}

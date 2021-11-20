@@ -1,0 +1,23 @@
+## Basic Configuration
+app:
+  name: ${APP_NAME:chassis-middleware-sample-server}
+  port: ${APP_PORT:8080}
+
+## Logging
+logging:
+  level:
+    io.vzhidu.chassis.middleware: ${CHASSIS_MIDDLEWARE_SAMPLE_RSERVER_LOGGING_LEVEL:INFO}
+
+spring:
+  ## Dependencies
+  profiles:
+    include: feign
+  ## RPC Services
+  cloud:
+    discovery:
+      client:
+        simple:
+          instances:
+            chassis-middleware-id-generator-server[0]:
+              uri: |
+                ${CHASSIS_MIDDLEWARE_ID_GENERATOR_SERVER_SVC:http://${CHASSIS_MIDDLEWARE_ID_GENERATOR_SERVER_SVC_SERVICE_HOST:127.0.0.1}:${CHASSIS_MIDDLEWARE_ID_GENERATOR_SERVER_SVC_SERVICE_PORT:8080}}

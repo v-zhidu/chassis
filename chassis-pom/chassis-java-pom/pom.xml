@@ -111,6 +111,12 @@
         </dependency>
 
         <!--  Testing -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+
         <!--  避免其他包引入的groovy版本不兼容的问题-->
         <!-- use a specific Groovy version rather than the one specified by spock-core -->
         <dependency>
@@ -121,33 +127,27 @@
         </dependency>
 
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
             <groupId>org.spockframework</groupId>
             <artifactId>spock-core</artifactId>
+            <scope>test</scope>
             <exclusions>
                 <exclusion>
                     <groupId>org.codehaus.groovy</groupId>
                     <artifactId>groovy</artifactId>
                 </exclusion>
             </exclusions>
-            <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.spockframework</groupId>
             <artifactId>spock-junit4</artifactId>
+            <scope>test</scope>
             <exclusions>
                 <exclusion>
                     <groupId>org.codehaus.groovy</groupId>
                     <artifactId>groovy</artifactId>
                 </exclusion>
             </exclusions>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -332,6 +332,7 @@
                         <!-- put your configurations here -->
                         <configLocation>${maven.checkstyle.file}</configLocation>
                         <suppressionsLocation>${maven.checkstyle.suppressions.file}</suppressionsLocation>
+                        <includeResources>false</includeResources>
                         <includeTestSourceDirectory>false</includeTestSourceDirectory>
                         <logViolationsToConsole>true</logViolationsToConsole>
                         <failOnViolation>${maven.checkstyle.failOnViolation}</failOnViolation>
@@ -367,6 +368,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
+                    <version>3.2.0</version>
                     <configuration>
                         <archive>
                             <manifest>

@@ -37,10 +37,10 @@ pid="${PID_DIR}/${PID_FILE_IDENT_PREFIX}-${APP}.pid"
 # This allows us to start multiple daemon of each type.
 id=$([ -f "${pid}" ] && echo $(wc -l < "${pid}") || echo "0")
 
-if [ -z "${APP_NAME}" ]; then
+if [ -z "${APP_NAME}" ] && [ "${APP}" ]; then
     export APP_NAME=${APP}
 fi
-if [ -z "${APP_PORT}" ]; then
+if [ -z "${APP_PORT}" ] && [ "${PORT}" ]; then
     export APP_PORT=${PORT}
 fi
 if [ -z "${APP_INSTANCE_ID}" ]; then

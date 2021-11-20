@@ -1,0 +1,37 @@
+configmap:
+  name: ""
+  files: "conf/**.yml"
+deployment:
+  image:
+    prefix: "ghcr.io/v-zhidu"
+    name: ""
+    pullPolicy: IfNotPresent
+    pullSecrets: []
+    tag: ""
+  container:
+    ports:
+      actuator: 8081
+      api: 8080
+    probes:
+      liveness:
+        path: /actuator/health/liveness
+        port: actuator
+      readiness:
+        path: /actuator/health/readiness
+        port: actuator
+    envs:
+      SPRING_CONFIG_IMPORT: optional:file:/etc/config/
+  annotations: {}
+  labels: {}
+  selectorLabels: {}
+  nodeSelectors: {}
+  affinities: {}
+  tolerations: []
+  replicaCount: 1
+  autoscaling:
+    enabled: true
+service:
+  labels: {}
+  selectorLabels: {}
+  ports:
+    api: 8080

@@ -40,8 +40,8 @@ cd build-target
 2. Edit `config/service` for choosing what services you want to deploy or adding more instances.
 
 ```text
-chassis-middleware-id-generator:9781
-chassis-middleware-sample:19781
+chassis-middleware-id-generator-server:9781
+chassis-middleware-sample-server:19781
 ```
 
 3. Edit the default application configuration `config/application/` if you need.

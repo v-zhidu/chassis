@@ -1,0 +1,17 @@
+############################################ Basic ############################################
+app:
+  dev-mode: ${APP_DEV_MODE:true}
+  port: ${APP_PORT:8080}
+  instance-id: ${APP_INSTANCE_ID:${app.name}-${random.value}}
+  instance-group: ${APP_INSTANCE_GROUP:development}
+  name: ${APP_NAME:application}
+  tags: ${APP_TAGS:}
+
+############################################ Spring Related ############################################
+spring:
+  config:
+    import: ${SPRING_CONFIG_IMPORT:optional:file:./conf/}
+  application:
+    name: ${app.name}
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:default,actuator,logging,server}

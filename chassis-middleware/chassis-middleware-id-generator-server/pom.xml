@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>io.vzhidu</groupId>
+        <artifactId>chassis-spring-pom</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
+        <relativePath>../../chassis-pom/chassis-spring-pom/pom.xml</relativePath>
+    </parent>
+
+    <artifactId>chassis-middleware-id-generator-server</artifactId>
+    <name>chassis-middleware-id-generator-server</name>
+    <packaging>jar</packaging>
+
+    <properties>
+        <leaf.version>1.0.2</leaf.version>
+        <leaf.curator.version>5.2.0</leaf.curator.version>
+        <maven.deploy.skip>true</maven.deploy.skip>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.vzhidu</groupId>
+            <artifactId>chassis-middleware-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.vzhidu</groupId>
+            <artifactId>chassis-common-spring-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.vzhidu</groupId>
+            <artifactId>chassis-common-spring-data-jdbc</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.vzhidu</groupId>
+            <artifactId>chassis-common-spring-mybatis</artifactId>
+        </dependency>
+        <!--
+        import from https://github.com/Meituan-Dianping/Leaf
+        you need maven install locally because it is not exist in maven repository.
+        -->
+        <dependency>
+            <groupId>com.sankuai.inf.leaf</groupId>
+            <artifactId>leaf-core</artifactId>
+            <version>${leaf.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>mysql</groupId>
+                    <artifactId>mysql-connector-java</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.mybatis</groupId>
+                    <artifactId>mybatis</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!--client library for zk-->
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-recipes</artifactId>
+        </dependency>
+
+    </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-recipes</artifactId>
+                <version>${leaf.curator.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>log4j</artifactId>
+                        <groupId>log4j</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>

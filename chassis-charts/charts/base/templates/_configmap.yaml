@@ -1,0 +1,38 @@
+{{/*Create a configmap onto kubernetes*/}}
+{{- define "base.configmap.tpl" -}}
+{{- $configmap := merge (default dict .Values.configmap) .Values.global.configmap }}
+{{- if $configmap.files }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "{{ include "base.configmap.name" . }}"
+  labels:
+    {{- include "base.labels" . | nindent 4 }}
+    {{- include "base.deployment.metadata.labels" . | indent 4 }}
+data:
+{{ (.Files.Glob $configmap.files ).AsConfig | indent 2 }}
+{{- end }}
+{{- end }}
+
+{{- define "base.configmap.name" -}}
+{{- $configmap := merge (default dict .Values.configmap) .Values.global.configmap }}
+{{- $name := printf "%s-cm" (include "base.name" .) }}
+{{- default $name $configmap.name }}
+{{- end }}
+
+{{- define "base.configmap.helper.container.volumeMounts" -}}
+{{- $configmap := merge (default dict .Values.configmap) .Values.global.configmap }}
+{{- if $configmap.files }}
+- name: config-volume
+  mountPath: /etc/config
+{{- end }}
+{{- end }}
+
+{{- define "base.configmap.helper.volumns" -}}
+{{- $configmap := merge (default dict .Values.configmap) .Values.global.configmap }}
+{{- if $configmap.files }}
+- name: config-volume
+  configMap:
+    name: "{{ include "base.configmap.name" . }}"
+{{- end }}
+{{- end }}

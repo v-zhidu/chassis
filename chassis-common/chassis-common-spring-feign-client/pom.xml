@@ -17,6 +17,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>io.vzhidu</groupId>
+            <artifactId>chassis-common-core</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
             <exclusions>
@@ -36,9 +41,25 @@
         </dependency>
 
         <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-jackson</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-okhttp</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-slf4j</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-loadbalancer</artifactId>
         </dependency>
+
         <!-- Use caffeine instead of Spring-cloud-load-balancer cache-->
         <dependency>
             <groupId>com.github.ben-manes.caffeine</groupId>
@@ -46,8 +67,15 @@
         </dependency>
 
         <dependency>
+            <groupId>org.apache.skywalking</groupId>
+            <artifactId>apm-toolkit-trace</artifactId>
+            <version>8.6.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
             <groupId>io.vzhidu</groupId>
-            <artifactId>chassis-common-spring-cloud-app</artifactId>
+            <artifactId>chassis-common-spring-web</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>

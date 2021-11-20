@@ -1,0 +1,26 @@
+## Basic Configuration
+app:
+  name: ${APP_NAME:chassis-middleware-id-generator-server}
+  port: ${APP_PORT:8080}
+
+## Logging
+logging:
+  level:
+    io.vzhidu.chassis.middleware.idgenerator: ${CHASSIS_MIDDLEWARE_ID_GENERATOR_SERVER_LOGGING_LEVEL:INFO}
+
+## Dependencies
+spring:
+  profiles:
+    include: jdbc
+
+## Application configuration
+middleware:
+  id-generator:
+    snowflake:
+      zookeeper:
+        host: ${CHASSIS_MIDDLEWARE_ID_GENERATOR_SERVER_SNOWFLAKE_ZK_HOST:127.0.0.1}
+        port: ${CHASSIS_MIDDLEWARE_ID_GENERATOR_SERVER_SNOWFLAKE_ZK_PORT:2181}
+      enabled: ${CHASSIS_MIDDLEWARE_ID_GENERATOR_SERVER_SNOWFLAKE_ENABLED:false}
+    segment:
+      enabled: ${CHASSIS_MIDDLEWARE_ID_GENERATOR_SERVER_SEGMENT_ENABLED:false}
+

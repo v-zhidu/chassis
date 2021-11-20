@@ -23,13 +23,13 @@
         <!-- Libra project binaries-->
         <dependency>
             <groupId>io.vzhidu</groupId>
-            <artifactId>chassis-middleware-id-generator</artifactId>
+            <artifactId>chassis-middleware-id-generator-server</artifactId>
             <version>${chassis.version}</version>
         </dependency>
 
         <dependency>
             <groupId>io.vzhidu</groupId>
-            <artifactId>chassis-middleware-sample</artifactId>
+            <artifactId>chassis-middleware-sample-server</artifactId>
             <version>${chassis.version}</version>
         </dependency>
 
@@ -83,7 +83,7 @@
                                     <arguments>
                                         <argument>-sfn</argument>
                                         <argument>
-                                            ${project.basedir}/target/${project.name}-${project.version}-bin/${project.name}-${project.version}
+                                            ${project.basedir}/target/${project.name}-${project.version}-bin
                                         </argument>
                                         <argument>${project.basedir}/../build-target</argument>
                                     </arguments>
@@ -98,6 +98,7 @@
 
     <build>
         <plugins>
+            <!-- @formatter:off -->
             <!--解决依赖冲突问题-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -115,13 +116,14 @@
                     </execution>
                 </executions>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>3.3.0</version>
                 <executions>
                     <execution>
-                        <id>bin</id>
+                        <id>dist</id>
                         <phase>package</phase>
                         <goals>
                             <goal>single</goal>
@@ -129,20 +131,8 @@
                         <configuration>
                             <descriptors>
                                 <descriptor>src/main/assembly/bin.xml</descriptor>
-                            </descriptors>
-                            <finalName>${project.name}-${project.version}-bin</finalName>
-                            <appendAssemblyId>false</appendAssemblyId>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>lib</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                        <configuration>
-                            <descriptors>
-                                <descriptor>src/main/assembly/lib.xml</descriptor>
+                                <descriptor>src/main/assembly/charts.xml</descriptor>
+                                <descriptor>src/main/assembly/conf.xml</descriptor>
                             </descriptors>
                             <finalName>${project.name}-${project.version}-bin</finalName>
                             <appendAssemblyId>false</appendAssemblyId>
@@ -151,5 +141,6 @@
                 </executions>
             </plugin>
         </plugins>
+        <!-- @formatter:on -->
     </build>
 </project>
