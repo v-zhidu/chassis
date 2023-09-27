@@ -15,7 +15,7 @@
         <!-- copy the application file -->
         <file>
             <source>
-                ../chassis-middleware/chassis-middleware-id-generator-server/target/classes/application.yml
+                ../chassis-middleware/chassis-middleware-id-generator-server/src/main/resources/application.yml
             </source>
             <outputDirectory>conf/chassis-middleware-id-generator-server/</outputDirectory>
             <fileMode>0644</fileMode>
@@ -23,7 +23,7 @@
 
         <file>
             <source>
-                ../chassis-middleware/chassis-middleware-sample-server/target/classes/application.yml
+                ../chassis-middleware/chassis-middleware-sample-server/src/main/resources/application.yml
             </source>
             <outputDirectory>conf/chassis-middleware-sample-server/</outputDirectory>
             <fileMode>0644</fileMode>
@@ -34,7 +34,7 @@
         <!-- copy the global config file -->
 
         <fileSet>
-            <directory>../chassis-common/chassis-common-spring-web/target/classes/</directory>
+            <directory>../chassis-common/chassis-common-spring-web/src/main/resources/</directory>
             <outputDirectory>conf/global</outputDirectory>
             <fileMode>0644</fileMode>
             <includes>
@@ -48,7 +48,7 @@
         </fileSet>
 
         <fileSet>
-            <directory>../chassis-common/chassis-common-spring-data-jdbc/target/classes/</directory>
+            <directory>../chassis-common/chassis-common-spring-data-jdbc/src/main/resources/</directory>
             <outputDirectory>conf/global</outputDirectory>
             <fileMode>0644</fileMode>
             <includes>
@@ -61,7 +61,7 @@
         </fileSet>
 
         <fileSet>
-            <directory>../chassis-common/chassis-common-spring-data-redis/target/classes/</directory>
+            <directory>../chassis-common/chassis-common-spring-data-redis/src/main/resources/</directory>
             <outputDirectory>conf/global</outputDirectory>
             <fileMode>0644</fileMode>
             <includes>
@@ -74,7 +74,7 @@
         </fileSet>
 
         <fileSet>
-            <directory>../chassis-common/chassis-common-spring-feign-client/target/classes/</directory>
+            <directory>../chassis-common/chassis-common-spring-feign-client/src/main/resources/</directory>
             <outputDirectory>conf/global</outputDirectory>
             <fileMode>0644</fileMode>
             <includes>
@@ -87,7 +87,7 @@
         </fileSet>
 
         <fileSet>
-            <directory>../chassis-common/chassis-common-spring-mybatis/target/classes/</directory>
+            <directory>../chassis-common/chassis-common-spring-mybatis/src/main/resources/</directory>
             <outputDirectory>conf/global</outputDirectory>
             <fileMode>0644</fileMode>
             <includes>
@@ -100,7 +100,7 @@
         </fileSet>
 
         <fileSet>
-            <directory>../chassis-common/chassis-common-spring-stream/target/classes/</directory>
+            <directory>../chassis-common/chassis-common-spring-stream/src/main/resources/</directory>
             <outputDirectory>conf/global</outputDirectory>
             <fileMode>0644</fileMode>
             <includes>
@@ -113,7 +113,7 @@
         </fileSet>
 
         <fileSet>
-            <directory>../chassis-common/chassis-common-spring-gateway/target/classes/</directory>
+            <directory>../chassis-common/chassis-common-spring-gateway/src/main/resources/</directory>
             <outputDirectory>conf/global</outputDirectory>
             <fileMode>0644</fileMode>
             <includes>

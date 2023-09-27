@@ -39,7 +39,8 @@ public class ErrorResponseAssertion {
                     .withError(
                             RpcError.builder()
                                     .metadata("", "application", "/mock/get")
-                                    .exception(new InvalidArgumentException("Required String parameter 'id' is not present"))
+                                    .exception(new InvalidArgumentException("Required request parameter 'id' for " +
+                                            "method parameter type String is not present"))
                                     .build()
                     )
     );

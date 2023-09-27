@@ -6,7 +6,7 @@ app:
 ## Logging
 logging:
   level:
-    io.vzhidu.chassis.middleware: ${CHASSIS_MIDDLEWARE_SAMPLE_RSERVER_LOGGING_LEVEL:INFO}
+    io.vzhidu.chassis.middleware: ${CHASSIS_MIDDLEWARE_SAMPLE_SERVER_LOGGING_LEVEL:INFO}
 
 spring:
   ## Dependencies

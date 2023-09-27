@@ -110,42 +110,42 @@
 
     </dependencies>
 
-    <profiles>
-        <profile>
-            <id>package-consul</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-                <property>
-                    <name>consul</name>
-                </property>
-            </activation>
-            <!-- Consul Discovery-->
-            <dependencies>
-                <dependency>
-                    <groupId>org.springframework.cloud</groupId>
-                    <artifactId>spring-cloud-starter-consul-discovery</artifactId>
-                    <exclusions>
-                        <exclusion>
-                            <groupId>org.springframework.cloud</groupId>
-                            <artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
-                        </exclusion>
-                        <exclusion>
-                            <groupId>com.google.code.findbugs</groupId>
-                            <artifactId>jsr305</artifactId>
-                        </exclusion>
-                        <exclusion>
-                            <groupId>org.hdrhistogram</groupId>
-                            <artifactId>HdrHistogram</artifactId>
-                        </exclusion>
-                    </exclusions>
-                </dependency>
+<!--    <profiles>-->
+<!--        <profile>-->
+<!--            <id>package-consul</id>-->
+<!--            <activation>-->
+<!--                <activeByDefault>false</activeByDefault>-->
+<!--                <property>-->
+<!--                    <name>consul</name>-->
+<!--                </property>-->
+<!--            </activation>-->
+<!--            &lt;!&ndash; Consul Discovery&ndash;&gt;-->
+<!--            <dependencies>-->
+<!--                <dependency>-->
+<!--                    <groupId>org.springframework.cloud</groupId>-->
+<!--                    <artifactId>spring-cloud-starter-consul-discovery</artifactId>-->
+<!--                    <exclusions>-->
+<!--                        <exclusion>-->
+<!--                            <groupId>org.springframework.cloud</groupId>-->
+<!--                            <artifactId>spring-cloud-starter-netflix-ribbon</artifactId>-->
+<!--                        </exclusion>-->
+<!--                        <exclusion>-->
+<!--                            <groupId>com.google.code.findbugs</groupId>-->
+<!--                            <artifactId>jsr305</artifactId>-->
+<!--                        </exclusion>-->
+<!--                        <exclusion>-->
+<!--                            <groupId>org.hdrhistogram</groupId>-->
+<!--                            <artifactId>HdrHistogram</artifactId>-->
+<!--                        </exclusion>-->
+<!--                    </exclusions>-->
+<!--                </dependency>-->
 
-                <!-- Consul Config-->
-                <dependency>
-                    <groupId>org.springframework.cloud</groupId>
-                    <artifactId>spring-cloud-starter-consul-config</artifactId>
-                </dependency>
-            </dependencies>
-        </profile>
-    </profiles>
+<!--                &lt;!&ndash; Consul Config&ndash;&gt;-->
+<!--                <dependency>-->
+<!--                    <groupId>org.springframework.cloud</groupId>-->
+<!--                    <artifactId>spring-cloud-starter-consul-config</artifactId>-->
+<!--                </dependency>-->
+<!--            </dependencies>-->
+<!--        </profile>-->
+<!--    </profiles>-->
 </project>

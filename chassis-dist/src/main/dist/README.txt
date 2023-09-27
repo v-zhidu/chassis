@@ -11,8 +11,8 @@ cd build-target
 2. Edit `config/service` for choosing what services you want to deploy or adding more instances.
 
 ```text
-chassis-middleware-id-generator:9781
-chassis-middleware-sample:19781
+chassis-middleware-id-generator-server:9780
+chassis-middleware-sample-server:9781
 ```
 
 3. Edit the default application configuration `config/application/` if you need.
@@ -40,3 +40,5 @@ chassis-middleware-sample:19781
 ```bash
 ./bin/stop_cluster.sh
 ```
+
+Note: The actual port of an instance is calculated by `port + 10000`.
