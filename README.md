@@ -76,6 +76,12 @@ curl -v 'http://127.0.0.1:19781/snowflakes/leaf-segment-test' | jq
 ./bin/stop_cluster.sh
 ```
 
+### Build Docker Image
+
+```bash
+./bin/build_image.sh [build] [publish] -p [prefix]
+```
+
 ## [WIP] Developing
 
 ### IntelliJ IDEA

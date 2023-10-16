@@ -42,6 +42,7 @@ if [ -z "${APP_NAME}" ] && [ "${APP}" ]; then
 fi
 if [ -z "${APP_PORT}" ] && [ "${PORT}" ]; then
     export APP_PORT=${PORT}
+    export ACTUATOR_SERVER_PORT=$((${APP_PORT} + 10000))
 fi
 if [ -z "${APP_INSTANCE_ID}" ]; then
     export APP_INSTANCE_ID="${APP}-${id}-${HOSTNAME}"
@@ -72,6 +73,7 @@ fi
 
 if [ "${APP_PORT}" ]; then
     app_setting+=("-Dserver.port=${APP_PORT}")
+    app_setting+=("-Dmanagement.server.port=${ACTUATOR_SERVER_PORT}")
 fi
 
 JAR_TO_RUN="${APP_DIR}/${APP_NAME}-*.jar"

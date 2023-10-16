@@ -27,7 +27,7 @@
         <dependencySet>
             <outputDirectory>lib/</outputDirectory>
             <includes>
-                <include>io.vzhidu*-api-client:jar:*</include>
+                <include>io.vzhidu:*-api-client:jar:*</include>
             </includes>
             <excludes/>
             <fileMode>0644</fileMode>

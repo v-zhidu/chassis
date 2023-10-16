@@ -20,7 +20,7 @@
     </properties>
 
     <dependencies>
-        <!-- Libra project binaries-->
+        <!-- Project binaries-->
         <dependency>
             <groupId>io.vzhidu</groupId>
             <artifactId>chassis-middleware-id-generator-server</artifactId>
@@ -33,7 +33,7 @@
             <version>${chassis.version}</version>
         </dependency>
 
-        <!-- Libra project libs-->
+        <!-- Project libs-->
         <dependency>
             <groupId>io.vzhidu</groupId>
             <artifactId>chassis-middleware-api-client</artifactId>
