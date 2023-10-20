@@ -8,7 +8,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnClass
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.cloud.client.loadbalancer.LoadBalancedRetryFactory
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient
-import org.springframework.cloud.client.loadbalancer.LoadBalancerProperties
 import org.springframework.cloud.loadbalancer.support.LoadBalancerClientFactory
 import org.springframework.cloud.openfeign.loadbalancer.FeignBlockingLoadBalancerClient
 import org.springframework.cloud.openfeign.loadbalancer.OnRetryNotEnabledCondition
@@ -28,11 +27,12 @@ class HttpbinFeignClientConfiguration {
 
     @Bean
     @Conditional(OnRetryNotEnabledCondition.class)
-    Client feignClient(OkHttpClient okHttpClient, LoadBalancerClient loadBalancerClient,
-                              LoadBalancerProperties properties, LoadBalancerClientFactory loadBalancerClientFactory) {
+    Client feignClient(OkHttpClient okHttpClient,
+                       LoadBalancerClient loadBalancerClient,
+                       LoadBalancerClientFactory loadBalancerClientFactory) {
         OkHttpClient newClient = okHttpClient.newBuilder().addInterceptor(new HttpbinResponseInterceptor()).build()
         feign.okhttp.OkHttpClient delegate = new feign.okhttp.OkHttpClient(newClient)
-        return new FeignBlockingLoadBalancerClient(delegate, loadBalancerClient, properties, loadBalancerClientFactory)
+        return new FeignBlockingLoadBalancerClient(delegate, loadBalancerClient, loadBalancerClientFactory)
     }
 
     @Bean
@@ -40,12 +40,13 @@ class HttpbinFeignClientConfiguration {
     @ConditionalOnBean(LoadBalancedRetryFactory.class)
     @ConditionalOnProperty(value = "spring.cloud.loadbalancer.retry.enabled", havingValue = "true",
             matchIfMissing = true)
-    Client feignRetryClient(LoadBalancerClient loadBalancerClient, OkHttpClient okHttpClient,
-                                   LoadBalancedRetryFactory loadBalancedRetryFactory, LoadBalancerProperties properties,
-                                   LoadBalancerClientFactory loadBalancerClientFactory) {
+    Client feignRetryClient(LoadBalancerClient loadBalancerClient,
+                            OkHttpClient okHttpClient,
+                            LoadBalancedRetryFactory loadBalancedRetryFactory,
+                            LoadBalancerClientFactory loadBalancerClientFactory) {
         OkHttpClient newClient = okHttpClient.newBuilder().addInterceptor(new HttpbinResponseInterceptor()).build()
         feign.okhttp.OkHttpClient delegate = new feign.okhttp.OkHttpClient(newClient)
-        return new RetryableFeignBlockingLoadBalancerClient(delegate, loadBalancerClient, loadBalancedRetryFactory,
-                properties, loadBalancerClientFactory)
+        return new RetryableFeignBlockingLoadBalancerClient(delegate, loadBalancerClient,
+                loadBalancedRetryFactory, loadBalancerClientFactory)
     }
 }
