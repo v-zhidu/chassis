@@ -3,7 +3,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: "{{ include "base.name" . }}-deploy"
+  name: "{{ include "base.name" . }}"
   labels:
     {{- include "base.labels" . | nindent 4 }}
     {{- include "base.deployment.metadata.labels" . | indent 4 }}

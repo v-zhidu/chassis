@@ -4,9 +4,9 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.vzhidu</groupId>
-    <artifactId>chassis-parent</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
-    <name>chassis-parent</name>
+    <artifactId>chassis</artifactId>
+    <version>${revision}</version>
+    <name>chassis</name>
     <description/>
     <packaging>pom</packaging>
 
@@ -39,7 +39,7 @@
     </distributionManagement>
 
     <modules>
-        <module>chassis-build-tools</module>
+        <module>chassis-pom/chassis-build-tools</module>
         <module>chassis-pom/chassis-java-pom</module>
         <module>chassis-pom/chassis-spring-pom</module>
         <module>chassis-common/chassis-common-core</module>
@@ -57,7 +57,7 @@
     </modules>
 
     <properties>
-        <chassis.version>0.1.0-SNAPSHOT</chassis.version>
+        <revision>0.1.0-SNAPSHOT</revision>
     </properties>
 
     <dependencyManagement>
@@ -65,52 +65,52 @@
             <dependency>
                 <groupId>io.vzhidu</groupId>
                 <artifactId>chassis-build-tools</artifactId>
-                <version>${chassis.version}</version>
+                <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>io.vzhidu</groupId>
                 <artifactId>chassis-common-core</artifactId>
-                <version>${chassis.version}</version>
+                <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>io.vzhidu</groupId>
                 <artifactId>chassis-common-spring-data-jdbc</artifactId>
-                <version>${chassis.version}</version>
+                <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>io.vzhidu</groupId>
                 <artifactId>chassis-common-spring-feign-client</artifactId>
-                <version>${chassis.version}</version>
+                <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>io.vzhidu</groupId>
                 <artifactId>chassis-common-spring-gateway</artifactId>
-                <version>${chassis.version}</version>
+                <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>io.vzhidu</groupId>
                 <artifactId>chassis-common-spring-mybatis</artifactId>
-                <version>${chassis.version}</version>
+                <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>io.vzhidu</groupId>
                 <artifactId>chassis-common-spring-stream</artifactId>
-                <version>${chassis.version}</version>
+                <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>io.vzhidu</groupId>
                 <artifactId>chassis-common-spring-web</artifactId>
-                <version>${chassis.version}</version>
+                <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>io.vzhidu</groupId>
                 <artifactId>chassis-middleware-core</artifactId>
-                <version>${chassis.version}</version>
+                <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>io.vzhidu</groupId>
                 <artifactId>chassis-middleware-api-client</artifactId>
-                <version>${chassis.version}</version>
+                <version>${revision}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

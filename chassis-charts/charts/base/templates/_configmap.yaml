@@ -16,7 +16,7 @@ data:
 
 {{- define "base.configmap.name" -}}
 {{- $configmap := merge (default dict .Values.configmap) .Values.global.configmap }}
-{{- $name := printf "%s-cm" (include "base.name" .) }}
+{{- $name := printf "%s" (include "base.name" .) }}
 {{- default $name $configmap.name }}
 {{- end }}
 

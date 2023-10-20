@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>io.vzhidu</groupId>
-        <artifactId>chassis-parent</artifactId>
-        <version>0.1.0-SNAPSHOT</version>
+        <artifactId>chassis</artifactId>
+        <version>${revision}</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
 
@@ -316,7 +316,7 @@
                         <dependency>
                             <groupId>io.vzhidu</groupId>
                             <artifactId>chassis-build-tools</artifactId>
-                            <version>${chassis.version}</version>
+                            <version>${revision}</version>
                         </dependency>
                     </dependencies>
                     <executions>
