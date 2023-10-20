@@ -1,8 +1,9 @@
 # Chassis
 
 [![](https://github.com/v-zhidu/chassis/actions/workflows/maven.yml/badge.svg?branch=main)](https://github.com/v-zhidu/chassis/actions/workflows/maven.yml)
-[![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-black.svg)](https://sonarcloud.io/summary/new_code?id=io.vzhidu%3Achassis)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=io.vzhidu%3Achassis&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=io.vzhidu%3Achassis)
+
+[![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-black.svg)](https://sonarcloud.io/summary/new_code?id=io.vzhidu%3Achassis)
 
 ## Features
 

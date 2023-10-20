@@ -19,6 +19,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
 
       - name: Install GitVersion
         uses: gittools/actions/gitversion/setup@v0
@@ -64,9 +66,3 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           ./mvnw -s .mvn/settings.xml -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Drevision=${{env.informationalVersion }} -Dsonar.organization=v-zhidu-sonar -Dsonar.host.url=https://sonarcloud.io -Dsonar.coverage.jacoco.xmlReportPaths=target/jacoco-report/jacoco.xml
-
-      - name: Publish to GitHub Packages Apache Maven
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          ./mvnw -s .mvn/settings.xml -B deploy -Drevision=${{ env.informationalVersion }} -DskipTests
