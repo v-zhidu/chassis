@@ -51,6 +51,7 @@ jobs:
 
       ## https://github.com/GitTools/actions/blob/main/docs/examples/github/gitversion/execute/usage-examples.md
       - name: Determine Version
+        id: gitversion
         uses: gittools/actions/gitversion/execute@v0
         with:
           useConfigFile: true
