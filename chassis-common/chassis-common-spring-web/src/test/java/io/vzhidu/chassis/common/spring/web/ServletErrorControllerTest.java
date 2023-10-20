@@ -19,7 +19,11 @@ import static io.vzhidu.chassis.common.spring.web.ErrorResponseAssertion.assertR
  *
  * @author Zhiqiang Du Created at 2020/3/23
  */
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = AbstractSpringBootApplication.class)
+@SpringBootTest(
+        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
+        classes = AbstractSpringBootApplication.class,
+        properties = {"server.error.include-exception=true"}
+)
 class ServletErrorControllerTest {
 
     @Autowired
