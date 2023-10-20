@@ -22,7 +22,7 @@ import static io.vzhidu.chassis.common.spring.web.ErrorResponseAssertion.assertR
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
         classes = AbstractSpringBootApplication.class,
-        properties = {"server.error.include-exception=true"}
+        properties = {"server.error.include-exception=true", "server.error.include-message=always"}
 )
 class ServletErrorControllerTest {
 
